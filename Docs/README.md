@@ -11,7 +11,7 @@ You can also send an e-mail to: EWU-Instructors@IntelliTect.com
 Please fill out this [google form](https://forms.gle/Ey1Tqs5tCvuqSS879) with your GitHub information. This is used by us so we can appropriately grade assignments.
 
 ## Book
-Essential C# 8.0 (6th Edition)  
+Essential C# 8.0 (7th Edition)  
 ISBN-13: 9780135972267
 
 ## General Information:
