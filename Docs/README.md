@@ -7,6 +7,9 @@ For any general question we suggest asking in the [gitter chat room](https://git
 
 You can also send an e-mail to: EWU-Instructors@IntelliTect.com
 
+## Online Meeting
+We will be utilizing Microsoft Teams for this class. The link to the meeting will be in the course syllabus on Canvas. You can find additional information for accessing Teams [here](MicrosoftTeams.md)
+
 ## GitHub Information
 Please fill out this [google form](https://forms.gle/Ey1Tqs5tCvuqSS879) with your GitHub information. This is used by us so we can appropriately grade assignments.
 
