@@ -2,6 +2,8 @@
 
 ## See [Docs](Docs)
 
+## Reading: Chapters 1-6 
+
 ## Issue 1:
 ### Reproduction steps:
 Run the application. 
