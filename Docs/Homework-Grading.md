@@ -1,6 +1,6 @@
 ## Homework Schedule ##
-* [Homework](Homework-Assignments) assignment will be assigned on Tuesday each week.
-* [Homework](Homework-Assignments) is due by 11:59 pm the following Monday.
+* [Homework](Homework-Assignments.md) assignment will be assigned on Tuesday each week.
+* [Homework](Homework-Assignments.md) is due by 11:59 pm the following Monday.
 * Peer review of another student's homework assignment due the following Wednesday by 11:59 pm.
 * Any final corrections to your assignment due by 11:59 pm the following Thursday.
 
@@ -29,7 +29,7 @@ Each assignment is a total of 70 points. Assignment may contain up to 10 points 
 
 ### Peer Review 
 #### (20 points)
-- A peer review is a [code review](Homework-Assignments#Peer-Review) where you submit the grading report.
+- A peer review is a [code review](Homework-Assignments.md#Peer-Review) where you submit the grading report.
 - Review submitted on time (See [Late Work](#Late-Work))
 - Accuracy of code review (does your review line up with the instructor's review)
 - All Xs on code review report must have comments on the relevant portion of code explaining why.

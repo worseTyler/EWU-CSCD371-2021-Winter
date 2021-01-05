@@ -32,7 +32,7 @@ Do not open a pull request until you are ready to have someone else [review it](
 3. Set the source and target repository and branch. Pay attention to the direction of the arrow icon.
 4. Click Create pull request.
 5. Ensure the title includes "Assignment `<number>`"
-6. If you [paired](Homework-Grading#Pairing), ensure the other person's name is included in the description. Enter any reasonable description. Please note: the title and description can be updated over time.
+6. If you [paired](Homework-Grading.md#Pairing), ensure the other person's name is included in the description. Enter any reasonable description. Please note: the title and description can be updated over time.
 
 ## Peer Review
 
@@ -40,7 +40,7 @@ All students are expected to perform a [code review](https://help.github.com/art
 
 Before starting a review, **immediately submit** a comment on the PR saying "I will review this", so other people do not start reviewing the same PR. 
 
-No code review should be empty. There **must be at least one comment** (even if it is just indicating that you reviewed the work and it looked good). Be aware that [part of your grade](Homework-Grading#peer-review) is dependent on doing good code reviews. 
+No code review should be empty. There **must be at least one comment** (even if it is just indicating that you reviewed the work and it looked good). Be aware that [part of your grade](Homework-Grading.md#peer-review) is dependent on doing good code reviews. 
 [Code Review Guidelines](https://intellitect.com/code-reviews/)
 
 A Peer Review, is simply a code review where you fill out the table in the `Assignment.md` file. After filling it out, copy and paste the content of it into a comment on the pull request. 
@@ -49,7 +49,7 @@ Feel free to do multiple code reviews for an assignment but no more than one pee
 
 If your assignment fails to get a Peer Review, please post in the gitter chat requesting one.
 
-If you [pair](Homework-Grading#pairing) with someone on the assignment **you both perform your own peer review**. 
+If you [pair](Homework-Grading.md#pairing) with someone on the assignment **you both perform your own peer review**. 
 
 ## Final corrections 
 This is your opportunity to correct anything caught by the peer review. If you completed the assignment, and the peer review did not find anything, you do not need to do anything here; these are free points. 

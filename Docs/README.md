@@ -18,7 +18,7 @@ Essential C# 8.0 (7th Edition)
 ISBN-13: 9780135972267
 
 ## General Information:
-* [**Grading System**](Homework-Grading)
+* [**Grading System**](Homework-Grading.md)
 * **Office Hours**: Office hours are available before class on Tuesday's and Thursdays starting at 1 PM.  To ensure that an instructor will be available, please schedule an appointment 24-hours beforehand by sending a meeting request email to EWU-Instructors@IntelliTect.com.  Alternative times may be available upon request.
 * **Code for the Book**: https://github.com/IntelliTect/EssentialCSharp
 * [Gitter Chat Room](https://gitter.im/IntelliTect/CSCD371-2021-Winter)
@@ -41,7 +41,7 @@ Though most of the course work will be cross platform, we will be working on Win
 - [GitExtensions](https://gitextensions.github.io/), [GitHub Desktop](https://desktop.github.com/), (or any other git tool): There are lots of options out there for working with git. If there is a tool you like, use it! 
 
 ## Class Video ##
-We will try to record class presentations so that students can review after class.  If we do record class, the [recordings will be available here](TODO).
+We will try to record class presentations so that students can review after class. [Recordings will be available here](TODO).
 Please note:
 * **Do not expect or rely on video recordings.**  We are not making any commitment to having video recordings of class. 
 * Please keep all videos ***confidential***. These videos are for people enrolled in this class.  No videos or parts of videos should be copied/distributed/shared.
