@@ -1,3 +1,3 @@
-# EWU-CSCD3710-2021-Winter
+# EWU-CSCD371-2021-Winter
 
 ## See [Docs](Docs)
