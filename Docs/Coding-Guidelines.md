@@ -3,7 +3,7 @@
 All references:
 Michaelis, Mark. Essential C# 8.0 (Addison-Wesley Microsoft Technology Series). Pearson Education. Kindle Edition.
 
-[IntelliTect Coding Guidelines](https://intellitect.github.io/CodingGuidelines)
+See here for the current [IntelliTect Coding Guidelines](https://intellitect.github.io/CodingGuidelines)
 
 ### Chapters 1 - 9 ###
 
