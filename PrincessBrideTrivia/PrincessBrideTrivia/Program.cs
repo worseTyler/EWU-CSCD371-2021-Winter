@@ -9,7 +9,7 @@ namespace PrincessBrideTrivia
         {
             string filePath = GetFilePath();
             Question[] questions = LoadQuestions(filePath);
-
+            RandomizeQuestions(questions);
             int numberCorrect = 0;
             for (int i = 0; i < questions.Length; i++)
             {
@@ -92,6 +92,20 @@ namespace PrincessBrideTrivia
                 questions[i] = question;
             }
             return questions;
+        }
+
+        public static void RandomizeQuestions(Question[] questions)
+        {
+            Question tempQuestion;
+            int swap;
+            Random rand = new Random();
+            for(int i = 0; i < questions.Length; i++)
+            {
+                swap = rand.Next(0, questions.Length - 1);
+                tempQuestion = questions[i];
+                questions[i] = questions[swap];
+                questions[swap] = tempQuestion;
+            }
         }
     }
 }

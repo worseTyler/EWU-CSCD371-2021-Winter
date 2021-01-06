@@ -97,8 +97,8 @@ namespace PrincessBrideTrivia.Tests
             Question[] randomTwo = Program.LoadQuestions(filePath);
 
             // Act
-            Program.RandomizeArray(randomOne);
-            Program.RandomizeArray(randomTwo);
+            Program.RandomizeQuestions(randomOne);
+            Program.RandomizeQuestions(randomTwo);
 
             // Assert
             for(int i = 0; i < randomOne.Length; i++)
