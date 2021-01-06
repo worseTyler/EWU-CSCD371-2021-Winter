@@ -87,7 +87,28 @@ namespace PrincessBrideTrivia.Tests
             Assert.AreEqual(expectedString, percentage);
         }
 
+        [TestMethod]
+        public void RandomizeQuestions_MakeDifferentOrder()
+        {
+            // Arrange
+            int numSame = 0;
+            string filePath = Program.GetFilePath();
+            Question[] randomOne = Program.LoadQuestions(filePath);
+            Question[] randomTwo = Program.LoadQuestions(filePath);
 
+            // Act
+            Program.RandomizeArray(randomOne);
+            Program.RandomizeArray(randomTwo);
+
+            // Assert
+            for(int i = 0; i < randomOne.Length; i++)
+            {
+                if (randomOne[i].Text == randomTwo[i].Text)
+                    numSame++;
+            }
+            if (numSame == randomOne.Length - 1)
+                Assert.Fail();
+        }
         private static void GenerateQuestionsFile(string filePath, int numberOfQuestions)
         {
             for (int i = 0; i < numberOfQuestions; i++)
