@@ -11,7 +11,7 @@ namespace LoginStuff.Tests
         public Application Application
         {
             get => _Application;
-            set => _Application = value ?? 
+            set => _Application = value ??
                 throw new ArgumentNullException(nameof(value));
         }
 
@@ -29,29 +29,39 @@ namespace LoginStuff.Tests
         }
 
         [TestMethod]
-        public void SimpleLoginTest()
-        {
-            
-
-            Assert.IsTrue(Application.Login(
-                userName: "Inigo.Montoya", password: "OpenSaysMe"));
-        }
-
-        [TestMethod]
-        public void InvalidLogin()
-        {
-            Assert.IsFalse(Application.Login(
-                userName: "Inigo.Montoya", password: "Bad Password"));
-        }
-
-        [TestMethod]
         public void ValidLogin()
         {
             // Arrange
 
             // Act
             bool result = Application.Login(
+                userName: "Inigo.Montoya", password: "OpenSaysMe");
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void InvalidPassword()
+        {
+            // Arrange
+
+            // Act
+            bool result = Application.Login(
                 userName: "Inigo.Montoya", password: "Bad Password");
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void InvalidCredentials()
+        {
+            // Arrange
+
+            // Act
+            bool result = Application.Login(
+                userName: "Princess.Buttercup", password: "Westley");
 
             // Assert
             Assert.IsFalse(result);
