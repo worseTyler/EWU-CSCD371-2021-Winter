@@ -1,4 +1,6 @@
-﻿namespace LoginStuff
+﻿using System;
+
+namespace LoginStuff
 {
     public class Application
     {
@@ -6,6 +8,11 @@
         {
 
 
+        }
+
+        public bool Login(string userName, string password)
+        {
+            return password == "OpenSaysMe";
         }
     }
 }
