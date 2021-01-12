@@ -21,6 +21,7 @@ Read **Chapters 7** - Inheritance, **Chapter 8** - Interfaces,  && **Chapter 9**
 - Ensure you turn on Warnings as Errors (TreatWarningsAsErrors)
 - Ensure that you turn on code analysis (EnableNETAnalyzers)
 - Ensure that you turn on CodeAnalysisTreatWarningsAsErrors
+- Set `LangVersion` to 9.0
 - **All of the above should be unit tested.**
 
 
