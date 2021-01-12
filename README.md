@@ -4,7 +4,7 @@
 For this assignment we are going to build a simple logging system. It will append items to a file. Some code for this assignment is already provided. The purpose of the assignment is to explore topics like base classes, extension methods, object initialization, encapsulation, properties, and parameter arrays.
 
 # Reading
-Read Chapters 7 - Inheritance & Chapter 8 - Interfaces
+Read **Chapters 7** - Inheritance, **Chapter 8** - Interfaces,  && **Chapter 9** - Value Types
 
 # Assignment
 - There is an existing `BaseLogger` class. It needs an **auto property** to hold the class name. This property should be set in the `LogFactory` using an **object initializer**.
@@ -17,6 +17,7 @@ Read Chapters 7 - Inheritance & Chapter 8 - Interfaces
 - The `LogFactory` should be updated with a new method `ConfigureFileLogger`. This should take in a file path and store it in a **private member**. It should use this when instantiating a new `FileLogger` in its `CreateLogger` method. 
 - If the file logger has not be configured in the `LogFactory`, its `CreateLogger` method should return `null`.
 - Inside of `BaseLoggerMixins` implement **extension methods** on `BaseLogger` for `Error`, `Warning`, `Information`, and `Debug`. Each of these methods should take in a `string` for the message, as well as a **parameter array** of arguments for the message. Each of these extension methods is expected to be a shortcut for calling the `BaseLogger.Log` method, by automatically supplying the appropriate `LogLevel`. These methods should throw an exception if the `BaseLogger` parameter is null. There are a couple example unit tests to get you started. 
+- Use the nameof() operator when identifying the class name to the logger.
 - All of the above should be unit tested.
 
 ## Extra Credit
