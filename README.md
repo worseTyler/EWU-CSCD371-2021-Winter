@@ -18,7 +18,12 @@ Read **Chapters 7** - Inheritance, **Chapter 8** - Interfaces,  && **Chapter 9**
 - If the file logger has not be configured in the `LogFactory`, its `CreateLogger` method should return `null`.
 - Inside of `BaseLoggerMixins` implement **extension methods** on `BaseLogger` for `Error`, `Warning`, `Information`, and `Debug`. Each of these methods should take in a `string` for the message, as well as a **parameter array** of arguments for the message. Each of these extension methods is expected to be a shortcut for calling the `BaseLogger.Log` method, by automatically supplying the appropriate `LogLevel`. These methods should throw an exception if the `BaseLogger` parameter is null. There are a couple example unit tests to get you started. 
 - Use the nameof() operator when identifying the class name to the logger.
-- All of the above should be unit tested.
+- Ensure you turn on Warnings as Errors (TreatWarningsAsErrors)
+- Ensure that you turn on code analysis (EnableNETAnalyzers)
+- Ensure that you turn on CodeAnalysisTreatWarningsAsErrors
+- **All of the above should be unit tested.**
+
+
 
 ## Extra Credit
 - Implement an additional logger. This logger must be unit tested. Some options to consider could be one that uses `System.Console` or `System.Diagnostics.Trace`.
