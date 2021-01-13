@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <None Update="Trivia.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

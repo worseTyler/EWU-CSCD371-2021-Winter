@@ -10,6 +10,7 @@ namespace PrincessBrideTrivia
             string filePath = GetFilePath();
             Question[] questions = LoadQuestions(filePath);
             RandomizeQuestions(questions);
+            RandomizeAnswers(questions);
             int numberCorrect = 0;
             for (int i = 0; i < questions.Length; i++)
             {
@@ -105,6 +106,30 @@ namespace PrincessBrideTrivia
                 tempQuestion = questions[i];
                 questions[i] = questions[swap];
                 questions[swap] = tempQuestion;
+            }
+        }
+
+        public static void RandomizeAnswers(Question[] questions)
+        {
+            string tempAnswer;
+            int swap;
+            Random rand = new Random();
+            foreach(Question question in questions)
+            {
+                int correctIndex = int.Parse(question.CorrectAnswerIndex) - 1;
+
+                for(int i = 0; i < question.Answers.Length; i++)
+                {
+                    swap = rand.Next(0, question.Answers.Length - 1);
+                    if(i == correctIndex || swap == correctIndex)
+                    {
+                        correctIndex = (i == correctIndex) ? swap : i;
+                        question.CorrectAnswerIndex = (correctIndex + 1).ToString();
+                    }
+                    tempAnswer = question.Answers[i];
+                    question.Answers[i] = question.Answers[swap];
+                    question.Answers[swap] = tempAnswer;
+                }
             }
         }
     }
