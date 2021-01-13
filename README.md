@@ -22,6 +22,7 @@ Read **Chapters 7** - Inheritance, **Chapter 8** - Interfaces,  && **Chapter 9**
 - Ensure that you turn on code analysis (EnableNETAnalyzers)
 - Ensure that you turn on CodeAnalysisTreatWarningsAsErrors
 - Set `LangVersion` to 9.0
+- Turn on Nullability (`Nullable`)
 - **All of the above should be unit tested.**
 
 
