@@ -12,11 +12,8 @@ namespace Logger
         public string FilePath { get; private set; } // Get rid of private set??
         public override void Log(LogLevel logLevel, string message)
         {
-            FileStream fileStream = new FileStream(FilePath, FileMode.Append);
-            StreamWriter streamWriter = new StreamWriter(fileStream);
-            streamWriter.WriteLine("this is a test");
-            fileStream.Close();
-            return;
+            System.Collections.Generic.IEnumerable<string> testString = $"{DateTime.Now:G} {logLevel}: {message}{Environment.NewLine}";
+            File.AppendAllLines(FilePath, testString);
         }
         public FileLogger(string filePath)
         {
