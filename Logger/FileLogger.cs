@@ -12,8 +12,7 @@ namespace Logger
         public string FilePath { get; private set; } // Get rid of private set??
         public override void Log(LogLevel logLevel, string message)
         {
-            System.Collections.Generic.IEnumerable<string> testString = $"{DateTime.Now:G} {logLevel}: {message}{Environment.NewLine}";
-            File.AppendAllLines(FilePath, testString);
+            File.AppendAllText(FilePath, $"{DateTime.Now} {Name} {logLevel} : {message} \n");
         }
         public FileLogger(string filePath)
         {
