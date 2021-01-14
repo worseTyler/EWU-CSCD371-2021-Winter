@@ -1,16 +1,18 @@
 ﻿using System;
-
+using System.IO;
 namespace Logger
 {
     public class LogFactory
     {
         private static string? FilePath;
-        public static FileLogger CreateLogger()
+        public static FileLogger CreateLogger(string className)
         {
             FileLogger? fileLogger;
-            if (false)
+
+            if (File.Exists(FilePath))
             {
-                fileLogger = new FileLogger();
+                fileLogger = new FileLogger(FilePath)
+                { Name = className };
             }
             else
             {
@@ -20,9 +22,18 @@ namespace Logger
             return fileLogger;
         }
 
-        public static void ConfigureFileLogger(string filePath)
+        public static bool ConfigureFileLogger(string filePath)
         {
-            FilePath = filePath;
+            if (File.Exists(filePath))
+            {
+                FilePath = filePath;
+                return true;
+            } 
+            else
+            {
+                return false;
+            }
+            
         }
     }
 }

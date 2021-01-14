@@ -7,58 +7,59 @@ namespace Logger.Tests
     [TestClass]
     public class LogFactoryTests
     {
-        public TestContext TestContext
+        [TestMethod]
+        public void ConfigureFileLogger_GivenValidInputSavesPath()
         {
-            get => _TestContext!;
-            set => _TestContext = value ?? throw new System.ArgumentNullException(nameof(value));
-        }
-        private TestContext? _TestContext;
-
-        [ClassInitialize]
-        static public void ClassInitialize(TestContext testContext)
-        {
-            //Console.WriteLine($"Inside ClassInitialize in directory '{ testContext.TestDir }'");
+            string filePath = Path.GetRandomFileName();
+            FileStream fileStream = new FileStream(filePath, FileMode.OpenOrCreate);
+            try
+            {
+                bool results = LogFactory.ConfigureFileLogger(filePath);
+                Assert.IsTrue(results);
+            }
+            finally
+            {
+                fileStream.Close();
+                File.Delete(filePath);
+            }
         }
 
         [TestMethod]
-        public void ConfigureFileLogger_GivenValidFilePath()
+        public void ConfigureFileLogger_GivenInvalidInput_ReturnsFalse()
         {
-            //string filePath;
-            //LogFactory.ConfigureFileLogger(filePath);
+            string filePath = "This Is A Bad File Path";
+            bool results = LogFactory.ConfigureFileLogger(filePath);
+            
+            Assert.IsFalse(results);
         }
 
-        //public void ConfigureFileLogger_GivenValidFile_ReturnsFileLogger()
-        //{
-        //    //Arrange
-
-        //    //Act
-
-        //    //Assert
-        //}
-        //[TestMethod]
-        //public void CreateLogger_GivenFilePath_ReturnsFileLogger()
-        //{
-
-        //}
         [TestMethod]
         public void CreateLogger_CreateFileLoggerObject_FilePathValid()
         {
             // Arrange
-            //LogFactory logFactory = new LogFactory();
-            string filePath = "Yes";
-            LogFactory.ConfigureFileLogger(filePath);
-
-            // Act
-            FileLogger fileLogger = LogFactory.CreateLogger();
-            Assert.IsNotNull(fileLogger);
+            string filePath = Path.GetRandomFileName();
+            FileStream fileStream = new FileStream(filePath, FileMode.OpenOrCreate);
+            try
+            {
+                LogFactory.ConfigureFileLogger(filePath);
+                string name = "Name";
+                // Act
+                FileLogger fileLogger = LogFactory.CreateLogger(name);
+                Assert.IsNotNull(fileLogger);
+            }
+            finally
+            {
+                fileStream.Close();
+                File.Delete(filePath);
+            }
         }
 
         [TestMethod]
         public void CreateLogger_ReturnNullGivenNoConfiguration()
         {
             //LogFactory logFactory = new LogFactory();
-
-            FileLogger fileLogger = LogFactory.CreateLogger();
+            string name = "Name";
+            FileLogger fileLogger = LogFactory.CreateLogger(name);
 
             Assert.IsNull(fileLogger);
 
