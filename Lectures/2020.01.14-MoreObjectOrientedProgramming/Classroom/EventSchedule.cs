@@ -2,16 +2,16 @@
 
 namespace Classroom
 {
-    public class Event
+    public class EventSchedule
     {
-        public Event(DateTime startDateTime, TimeSpan duration)
+        public EventSchedule(DateTime startDateTime, TimeSpan duration)
         {
             (StartDateTime, Duration) = (startDateTime, duration);
         }
 
         public DateTime StartDateTime { get; set; }
 
-        TimeSpan _TimeSpan;
+        private TimeSpan _TimeSpan;
         public TimeSpan Duration {
             get
             {

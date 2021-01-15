@@ -2,22 +2,17 @@
 
 namespace Classroom
 {
-    public class Course
+    public record Course
     {
 
         private string? _Name;
-        public string Name 
+        public string Name
         {
             get
             {
                 return _Name!;
             }
-            set => _Name = value ?? throw new ArgumentNullException(nameof(value)); 
-        }
-
-        public string DebugText
-        {
-            get { return $"The Course: {Name}"; }
+            set => _Name = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         public string? Description { get; set; }
@@ -29,6 +24,7 @@ namespace Classroom
             // Value types can also be null - but the complier checks, it is more than just intent.
             // int? number = null;
             // int number2 = (int)number!;
+
         }
     }
 }

@@ -27,5 +27,12 @@ namespace Classroom.Tests
             Assert.AreEqual("Inigo", result);
         }
 
+        [TestMethod]
+        public void StringStuff()
+        {
+            string text1 = string.Format("The Method Name is {0}", nameof(StringStuff));
+            string text2 = $"The Method Name is { nameof(StringStuff) }";
+            Assert.AreEqual(text1, text2);
+        }
     }
 }

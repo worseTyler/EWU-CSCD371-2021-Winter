@@ -6,7 +6,7 @@ namespace Classroom
     {
         public static string TitleCase(this string value, int maxLength = 0)
         {
-            return $"{char.ToUpper(value[0])}{value.Substring(1)}";
+            return $"{char.ToUpper(value[0])}{value[1..]}";
         }
     }
 }

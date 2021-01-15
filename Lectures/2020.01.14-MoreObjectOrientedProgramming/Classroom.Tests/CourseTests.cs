@@ -63,11 +63,17 @@ namespace Classroom.Tests
         }
 
         [TestMethod]
-        public void StringStuff()
+        public void PrintMethod_BasicCourse_WriteDateInStringFormat()
         {
-            string text1 = string.Format("The Method Name is {0}", nameof(StringStuff));
-            string text2 = $"The Method Name is { nameof(StringStuff) }";
-            Assert.AreEqual(text1, text2);
+            Course course1 = new ("CSCD371");
+            course1.Description = "Awesome C# class by Mike and Kevin";
+            Course course2 = new ("CSCD371");
+            course2.Description = "Awesome C# class by Mike and Kevin";
+
+            Assert.AreEqual(course1, course2);
+
+            Assert.AreEqual(
+                "Course { Name = CSCD371, Description = Awesome C# class by Mike and Kevin }", course1.ToString());
         }
     }
 }
