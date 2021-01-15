@@ -16,7 +16,7 @@ namespace Logger
         }
         public FileLogger(string filePath)
         {
-            FilePath = filePath ?? throw new ArgumentNullException(nameof(FileLogger));
+            FilePath = filePath ?? throw new ArgumentNullException($"FilePath was null in the {nameof(FileLogger)}");
         }
     }
 }
