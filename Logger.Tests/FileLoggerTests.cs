@@ -1,10 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.IO;
-using System.Linq;
-using System;
-
-namespace Logger.Tests
+﻿namespace Logger.Tests
 {
+    using System;
+    using System.IO;
+    using System.Linq;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     public class FileLoggerTests
     {
@@ -28,6 +28,5 @@ namespace Logger.Tests
             // Assert
             Assert.AreEqual($"{DateTime.Now} {loggerName} {logLevel} : {loggerMessage} ", lastLine);
         }
-
     }
 }
