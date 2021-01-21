@@ -6,19 +6,21 @@ namespace _2020._01._19.SomethingSomethingInterfaces
 {
     public interface IMagicNumberGenerator
     {
-        public int DoStuff()
-        {
-            return 42;
-        }
+        string Create();
     }
 
     public interface ICookingService
     {
-        internal string Create();
+        string Create();
 
-        public int DoStuff()
+        int DoStuff(string todoThing);
+    }
+
+    public static class CookingServiceExtensions
+    {
+        public static int DoStuff(this ICookingService service)
         {
-            return 43;
+            return service.DoStuff("");
         }
     }
 
@@ -26,14 +28,44 @@ namespace _2020._01._19.SomethingSomethingInterfaces
     {
         string ICookingService.Create()
         {
-            throw new NotImplementedException();
+            return "Cooking";
+        }
+        string IMagicNumberGenerator.Create()
+        {
+            return "42";
         }
 
+        public string Create() => "Foo";
+
+        public int DoStuff(string todoThing)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     [TestClass]
     public class WaffleCookTests
     {
+        [TestMethod]
+        public void MyTestMethod()
+        {
+            ICookingService service = new WaffleService();
+
+            service.DoStuff();
+        }
+
+        [TestMethod]
+        public void MultipleInterface_ExplicitImplementation()
+        {
+            WaffleService service = new();
+            //ICookingService cookingService = service;
+            IMagicNumberGenerator magicNumbers = service;
+
+            Assert.AreEqual("Foo", service.Create());
+            Assert.AreEqual("Cooking", ((ICookingService)service).Create());
+            Assert.AreEqual("42", magicNumbers.Create());
+        }
+
         //private class TestingCookingService : ICookingService
         //{
         //    public string CreateReturnValue { get; set; } = "Syrup";
@@ -48,15 +80,15 @@ namespace _2020._01._19.SomethingSomethingInterfaces
         //    }
         //}
 
-        [TestMethod]
-        public void DoStuffTests()
-        {
-            IMagicNumberGenerator service = new WaffleService();
-            ICookingService service2 = new WaffleService();
-
-            Assert.AreEqual(42, service.DoStuff());
-            Assert.AreEqual(43, service2.DoStuff());
-        }
+        //[TestMethod]
+        //public void DoStuffTests()
+        //{
+        //    IMagicNumberGenerator service = new WaffleService();
+        //    ICookingService service2 = new WaffleService();
+        //
+        //    Assert.AreEqual(42, service.DoStuff());
+        //    Assert.AreEqual(43, service2.DoStuff());
+        //}
 
         /*
         [TestMethod]
