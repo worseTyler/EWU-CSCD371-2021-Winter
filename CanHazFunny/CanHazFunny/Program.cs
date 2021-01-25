@@ -1,10 +1,10 @@
 ﻿namespace CanHazFunny
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            new Jester(new JokeService()).TellJoke();
+            new Jester(new JokeService(), new OutputJokeService()).TellJoke();
         }
     }
 }
