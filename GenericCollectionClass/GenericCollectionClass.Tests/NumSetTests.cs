@@ -67,7 +67,7 @@ namespace GenericCollectionClass.Tests
         [TestMethod]
         public void Equals_GivenDifferentNumSets_ReturnsFalse()
         {
-            (NumSet numSetOne, NumSet numSetTwo) = CreateSameNumSet();
+            (NumSet numSetOne, NumSet numSetTwo) = CreateDifferentNumSet();
 
             bool result = numSetOne.Equals(numSetTwo);
 
@@ -82,9 +82,43 @@ namespace GenericCollectionClass.Tests
             bool result = numSetOne == numSetTwo;
 
             Assert.IsTrue(result);
-
         }
+
+        [TestMethod]
+        public void EqualsOperator_GivenDifferentNumSet_ReturnFalse()
+        {
+            (NumSet numSetOne, NumSet numSetTwo) = CreateDifferentNumSet();
+
+            bool result = numSetOne == numSetTwo;
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void NotEqualsOperator_GivenDifferentNumSet_ReturnTrue()
+        {
+            (NumSet numSetOne, NumSet numSetTwo) = CreateDifferentNumSet();
+
+            bool result = numSetOne != numSetTwo;
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void NotEqualsOperator_GivenSameNumSet_ReturnFalse()
+        {
+            (NumSet numSetOne, NumSet numSetTwo) = CreateSameNumSet();
+
+            bool result = numSetOne != numSetTwo;
+
+            Assert.IsFalse(result);
+        }
+
+
         private (NumSet, NumSet) CreateSameNumSet() 
                 => (new NumSet(1, 2, 3, 4, 5), new NumSet(5, 4, 3, 2, 1));
+
+        private (NumSet, NumSet) CreateDifferentNumSet()
+                => (new NumSet(1, 2, 3, 4, 5), new NumSet(6, 7, 8, 9, 10));
     }
 }
