@@ -8,7 +8,7 @@ The purpose of this assignment is to write a class library with a generic collec
 
 ## Reading
 
-Read through Chapter 12
+Read through Chapter 12, 15, 16
 
 ## Instructions
 - Create both a *class library* project and a unit test project. 
