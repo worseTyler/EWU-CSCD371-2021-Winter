@@ -22,4 +22,10 @@
     <ProjectReference Include="..\GenericCollectionClass\GenericCollectionClass.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="GenericCollectionClass">
+      <HintPath>..\GenericCollectionClass\bin\Debug\net5.0\GenericCollectionClass.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

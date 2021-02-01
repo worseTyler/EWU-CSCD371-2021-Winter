@@ -56,42 +56,12 @@ namespace GenericCollectionClass
         {
             return this.Collection.ToArray();
         }
-    }
 
-    public class SetWriter : IDisposable
-    {
-        private bool DisposedValue;
-
-        public SetWriter(string filePath)
+        public static implicit operator int[](NumSet numSet)
         {
-            this.StreamWriter = new StreamWriter(filePath 
-                ?? throw new ArgumentNullException($"{nameof(SetWriter)} cannot be instantiated because of a null filePath"));
-        }
-        private StreamWriter StreamWriter { get; }
-
-        public void WriteToStream(string message)
-        {
-            this.StreamWriter.Write(message);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!this.DisposedValue)
-            {
-                if (disposing)
-                {
-                    StreamWriter.Close();
-                    StreamWriter.Dispose();
-                }
-                this.DisposedValue = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            return numSet.Collection.ToArray();
         }
     }
+
+
 }

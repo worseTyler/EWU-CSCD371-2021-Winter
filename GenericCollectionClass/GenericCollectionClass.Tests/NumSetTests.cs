@@ -1,7 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace GenericCollectionClass.Tests
 {
@@ -64,18 +62,6 @@ namespace GenericCollectionClass.Tests
             bool result = numSetOne.Equals(null);
 
             Assert.IsFalse(result);
-        }
-
-        [TestMethod]
-        public void Equals_StartingNullNumSet_ReturnsFalse()
-        {
-            NumSet? emptySet = null;
-            NumSet numSetOne = new(1, 2, 3, 4, 5);
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-            bool results = emptySet.Equals(numSetOne);
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
-
-            Assert.IsFalse(results);
         }
         [TestMethod]
         public void Equals_GivenDifferentNumSets_ReturnsFalse()
@@ -150,57 +136,27 @@ namespace GenericCollectionClass.Tests
                 expected++;
             }
         }
+
+        [TestMethod]
+        public void CastToArray_AfterCreatingNumSet_CanGetArray()
+        {
+            NumSet numSet = new (1, 2, 3, 4, 5);
+            int[] funcArray = numSet.GetArray();
+            int[] castArray = numSet;
+
+
+            for(int i = 0; i < castArray.Length; i++)
+            {
+                Assert.AreEqual(castArray[i], funcArray[i]);
+            }
+        }
+
+
         private (NumSet, NumSet) CreateSameNumSet() 
                 => (new NumSet(1, 2, 3, 4, 5), new NumSet(5, 4, 3, 2, 1));
 
         private (NumSet, NumSet) CreateDifferentNumSet()
                 => (new NumSet(1, 2, 3, 4, 5), new NumSet(6, 7, 8, 9, 10));
 
-    }
-
-    [TestClass]
-    public class SetWriterTests
-    {
-        [TestMethod]
-        public void Create_GivenValidFilePath_CreateSetWriter()
-        {
-            string filePath = Path.GetTempFileName();
-            try
-            {
-                using (SetWriter setWriter = new(filePath))
-                {
-                    Assert.IsNotNull(setWriter);
-                }
-            }
-            finally
-            {
-                File.Delete(filePath);
-            }
-        }
-        [TestMethod]
-        public void WriteToStream_GivenMessage_WritesToStream()
-        {
-            string testMessage = "This is a test message";
-            string filePath = Path.GetTempFileName();
-            try
-            {
-                using (SetWriter setWriter = new (filePath))
-                {
-                    setWriter.WriteToStream(testMessage);
-                }
-                string returnValue = File.ReadAllText(filePath);
-                Assert.AreEqual(testMessage, returnValue);
-            }
-            finally
-            {
-                File.Delete(filePath);
-            }
-        }
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Create_GivenInvalidFilePath_ThrowException()
-        {
-            SetWriter _ = new(null!);
-        }
     }
 }

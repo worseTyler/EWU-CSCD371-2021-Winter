@@ -1,23 +1,42 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GenericCollectionClass.SetWriterSpace
 {
-    class SetWriter
+    public class SetWriter : IDisposable
     {
+        private bool DisposedValue;
+
         public SetWriter(string filePath)
         {
-            this.StreamWriter = new StreamWriter(filePath ?? throw new ArgumentNullException(nameof(SetWriter)));
+            this.StreamWriter = new StreamWriter(filePath
+                ?? throw new ArgumentNullException($"{nameof(SetWriter)} cannot be instantiated because of a null filePath"));
         }
         private StreamWriter StreamWriter { get; }
 
-        public void WriteToStream(string message)
+        public void WriteToStream(NumSet set)
         {
-            this.StreamWriter.Write(message);
+            this.StreamWriter.Write(set.ToString());
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.DisposedValue)
+            {
+                if (disposing)
+                {
+                    StreamWriter.Close();
+                    StreamWriter.Dispose();
+                }
+                this.DisposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }
