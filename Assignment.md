@@ -4,10 +4,10 @@
 - NumSet ToString implemented correctly: ✔❌
 - NumSet equality operators implemented correctly: ✔❌
 - NumSet fully unit tested: ✔❌
-- SeWriter created in nested namespace: ✔❌ 
-- SeWriter writes set to file: ✔❌ 
-- SeWriter properly implements IDisposable: ✔❌ 
-- SeWriter fully unit tested: ✔❌ 
+- SetWriter created in nested namespace: ✔❌ 
+- SetWriter writes set to file: ✔❌ 
+- SetWriter properly implements IDisposable: ✔❌ 
+- SetWriter fully unit tested: ✔❌ 
 
 ## Extra Credit
 NumSet contains cast operator that is unit tested: ✔❌
