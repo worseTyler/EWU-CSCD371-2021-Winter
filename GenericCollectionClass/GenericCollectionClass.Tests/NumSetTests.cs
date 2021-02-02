@@ -1,11 +1,14 @@
 namespace GenericCollectionClass.Tests
 {
+    using System;
     using System.Collections.Generic;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
     public class NumSetTests
     {
+        public TestContext? TestContext { get; set; }
+
         [TestMethod]
         public void Create_GivenParamArrayInput_CreateNumSet()
         {

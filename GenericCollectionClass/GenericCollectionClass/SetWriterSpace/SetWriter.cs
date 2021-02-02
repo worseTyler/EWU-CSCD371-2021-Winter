@@ -33,8 +33,8 @@
             {
                 if (disposing)
                 {
-                    this.StreamWriter.Close();
-                    this.StreamWriter.Dispose();
+                    this.StreamWriter?.Close();
+                    this.StreamWriter?.Dispose();
                 }
 
                 this.disposedValue = true;

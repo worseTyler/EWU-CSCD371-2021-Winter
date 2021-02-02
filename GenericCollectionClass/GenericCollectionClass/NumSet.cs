@@ -1,5 +1,6 @@
 ﻿namespace GenericCollectionClass
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -37,16 +38,8 @@
 
         public override int GetHashCode()
         {
-            List<int> sorted = this.Collection.ToList();
-
-            sorted.Sort();
-            string hashCode = string.Empty;
-            foreach (int num in sorted)
-            {
-                hashCode += num.GetHashCode();
-            }
-
-            return int.Parse(hashCode);
+            IOrderedEnumerable<int> sorted = this.Collection.OrderBy(item => item);
+            return string.Join("|", sorted).GetHashCode();
         }
 
         public override bool Equals(object? obj)
