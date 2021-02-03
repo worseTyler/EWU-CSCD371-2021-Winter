@@ -2,36 +2,46 @@
 
 ## See [Docs](Docs)
 
-# Assignment 4
+## Assignment 5
 
-The purpose of this assignment is to write a class library with a generic collection class that supports a set of numbers.
+The purpose of this assignment is to write a class library is to learn how to write a generic class and a generic method. To accomplish this you will write a linked list that circles back on itself.
 
 ## Reading
 
-Read through Chapter 12, 13, 15
+Catch Up On Reading (Chapter 1-15 except Chapter 14). This is your chance to get caught up - use it!
 
 ## Instructions
-- Create both a *class library* project and a unit test project. 
-  - You may pick any reasonable name you want for the project, but unit test project should have a `.Tests` suffix (ie. <ProjectBeingTested>.Tests)
-  - Projects should all target net5.
-  - Ensure you enable nullable reference types, warnings as errors, and enabled .NET analyzers for both projects
 
-- Write an `NumSet` class (not a record) with the following behavior
-  - A constructor that accepts a variable number of integers (params array)
-  - `ToString` method should display all of the numbers in the set.
-  - `Equals`/`GetHashCode` implementation should be based on the integers within the NumSet. Because this is a set, the order of the items should not matter (ie. A set with (1, 2, 3) should equal a set with (3, 2, 1))
-  - Add equality operators (`==` and `!=`) for NumSet
-  - Add a method to return an array with the number from the set. Modifying the returned array should not change the `NumSet` in any way.
-  - Use appropriate access modifiers for all members. Follow the principle of least access; if it doesn't need to be public use a different accessor.
-  - All members should be fully unit tested
-
-- Write a `SetWriter` class this class will be responsible for writing the set to a file.
-  - This class should be in a *nested namespace*
-  - This class should take in a file to write to in its constructor. In the constructor create a [StreamWriter](https://docs.microsoft.com/en-us/dotnet/api/system.io.streamwriter?view=net-5.0) instance to use to write the file.
-  - This class should have a method that writes the values in the set to the file. 
-  - This class should implement `IDispoable` following the [disposable pattern](https://docs.microsoft.com/en-us/dotnet/standard/garbage-collection/implementing-dispose). Clean up the StreamWriter instance that was created in the constructor.
-  - This class should be fully unit tested
+- Create a *class library* project called "GenericsHomework.". ❌✔
+- Create a node class that can contain a value of any type and points to the next node and traversing the next node points back to the first item.
+  - Define the `Node` class
+  - Include a constuctor that takes a value.  (No validation is necessary on the value). ❌✔
+  - Add a `ToString()` override that writes out the value's `ToString()` result. ❌✔
+  - Add a `Next` property that points to the next node or else points to itself if there are no other nodes in the list. ❌✔
+    - The `Next` property should be non-nullable (careful to follow the non-nullable property guidelines) ❌✔
+    - The `Next` property setter should be private. ❌✔
+    - In addition to non-null validation, the body of the `Next` property should insert the next `Node` (the `value`) into the list. ❌✔
+  - Add an `Insert` method that takes a value and inserts a new `Node` instance after the current node (by invoking the `Next` property). ❌✔
+  - Add a clear method that effectively removes all items from a list except the current node. Pay attention as to whether you should be
+  concerned with the following:
+    - Whether it is sufficient to only set Next to itself ❌✔
+    - Whether to set the removed items to circle back on themselves. In other words, whether to close the loop of the removed items. (Provide a test to show why this is required if it is required). ❌✔
+    - Given there is a circular list of items, provide a comment to indicate whether you need to worry about garbage colleciton because all the items point to each other and therefore may never be garbage collected. ❌✔
+- You should not rely on any BCL generic classes for your implementation. ❌✔
 
 ## Extra Credit
-- Write an implicit cast operator to converter `NumSet` a C# array. Ensure null cases are properly handled. This should also be unit tested.
-- The process of constantly setting up your projects with duplicate properties can be simplified by using a [Directory.Build.props file](https://docs.microsoft.com/en-us/visualstudio/msbuild/customize-your-build?view=vs-2019). Implement this in your pull request. Ensure that properties set in that file are not set within the project files.
+
+Do one of the following two options (or both if you want extra extra credit) :)
+
+1. Implement a `VennDiagram` structure that contains `n` `Circle`s that only contains homogenous **reference types** of any type. ❌✔
+
+- Each circle contains n items and each item can belong to one more more `Circle` instances.
+- You are not required to use a `Node` from earlier in the homework for your venn diagram implementation.
+- You are welcome to use exising BCL generic classes for the extra credit.
+
+1. Implement `Systm.Collections.Generic.ICollection<T>` on the `Node` class ❌✔
+
+## Fundamentals
+
+- Ensure you enable nullable reference types, net5 targetted, C# 9.0, warnings as errors, and enabled .NET analyzers for both projects ❌✔
+- All of the above should be unit tested ❌✔
