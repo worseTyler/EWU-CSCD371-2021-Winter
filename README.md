@@ -17,7 +17,7 @@ Catch Up On Reading (Chapter 1-15 except Chapter 14). This is your chance to get
   - Define the `Node` class
   - Include a constuctor that takes a value.  (No validation is necessary on the value). ❌✔
   - Add a `ToString()` override that writes out the value's `ToString()` result. ❌✔
-  - Add a `Next` property that points to the next node or else points to itself if there are no other nodes in the list. ❌✔
+  - Add a `Next` property that references the next node or else refers back to itself if there are no other nodes in the list. ❌✔
     - The `Next` property should be non-nullable (careful to follow the non-nullable property guidelines) ❌✔
     - The `Next` property setter should be private. ❌✔
     - In addition to non-null validation, the body of the `Next` property should insert the next `Node` (the `value`) into the list. ❌✔
@@ -44,4 +44,5 @@ Do one of the following two options (or both if you want extra extra credit) :)
 ## Fundamentals
 
 - Ensure you enable nullable reference types, net5 targetted, C# 9.0, warnings as errors, and enabled .NET analyzers for both projects ❌✔
+  - For this assignment, always use `Assert.AreEquals<T>()` (the generic version)
 - All of the above should be unit tested ❌✔
