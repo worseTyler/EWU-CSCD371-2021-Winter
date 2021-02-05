@@ -39,7 +39,7 @@ Do one of the following two options (or both if you want extra extra credit) :)
 - You are not required to use a `Node` from earlier in the homework for your venn diagram implementation.
 - You are welcome to use exising BCL generic classes for the extra credit.
 
-1. Implement `Systm.Collections.Generic.ICollection<T>` on the `Node` class ❌✔
+2. Implement `Systm.Collections.Generic.ICollection<T>` on the `Node` class ❌✔
 
 ## Fundamentals
 
