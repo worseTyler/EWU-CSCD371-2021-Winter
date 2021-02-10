@@ -1,30 +1,37 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-
 namespace GenericsHomework.Tests
 {
+    using System;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "INTL0003:Methods PascalCase", Justification = "<Pending>")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores", Justification = "<Pending>")]
     public class NodeTests
     {
         [TestMethod]
+
         public void CraeteNode_GivenValidInput_CreatesNode()
         {
             _ = new Node<int>(42);
         }
 
         [TestMethod]
+
         public void ToString_GivenValidNode_ReturnsCorrectString()
         {
             Node<int> node = new(42);
             Assert.AreEqual<string>("42", node.ToString());
         }
+
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        //[ExpectedException(typeof(ArgumentNullException))] // If ToString throws an exception
         public void ToString_GivenInvalidValue_ThrowsException()
         {
             Node<int?> node = new(null);
-            node.ToString();
+            string output = node.ToString();
+            Assert.AreEqual<string>("Null", output);
         }
+
         [TestMethod]
         public void Next_GivenNoOtherNodes_ReferencesSelf()
         {
@@ -75,40 +82,14 @@ namespace GenericsHomework.Tests
         }
 
         [TestMethod]
-        public void Clear_()
+        public void Clear_ListWillPointBackToSelf()
         {
-            Node<string>? node = new("Yes");
-            node.Insert("No");
-            node.Insert("Why");
-            WeakReference weakReference = new(node.Next.Next.Next, true);
+            Node<int> node = new(42);
+            node.Insert(43);
+            node.Insert(44);
+            Assert.IsFalse(node.Equals(node.Next));
             node.Clear();
-            node = null;
-            GC.Collect();
-
-            Assert.IsNotNull(weakReference);
-            // I have tried so many different things and none of them
-            // Are actually getting the garbage collector to remove
-            // any of the nodes
-        }
-
-        [TestMethod]
-        public void TestingGarbageCollection_ThisShouldWork()
-        {
-            Node<string> node = new("yes");
-
-            WeakReference<Node<string>> weakReference = new(node, true);
-            node = new("no");
-
-            GC.Collect();
-
-            Assert.IsNotNull(weakReference);
-            // I remove the reference to the node that contains yes 
-            // But when I call the garbage collector it still doesn't
-            // Get rid of the first node
-
-            // This is like my 10th attempt at a function that will
-            // use WeakReference and the GC.Collect()
+            Assert.IsTrue(node.Equals(node.Next));
         }
     }
 }
-

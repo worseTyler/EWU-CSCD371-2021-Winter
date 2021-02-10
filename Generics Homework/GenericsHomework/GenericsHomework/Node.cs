@@ -8,8 +8,8 @@
 
         public Node(T value)
         {
-            this.Value = value;
-            this._Next = this;
+            Value = value;
+            _Next = this;
         }
 
         public T Value { get; private set; }
@@ -18,18 +18,18 @@
         {
             get
             {
-                return this._Next;
+                return _Next;
             }
 
             private set
             {
-                this._Next = value ?? throw new ArgumentNullException($"{nameof(value)} can't be set to Node's Next property because it is null");
+                _Next = value ?? throw new ArgumentNullException($"{nameof(value)} can't be set to Node's Next property because it is null");
             }
         }
 
         public override string ToString()
         {
-            return this.Value?.ToString() ?? throw new ArgumentNullException($"{nameof(Node<T>)}'s value is null");
+            return Value?.ToString() ?? "Null"; //throw new ArgumentNullException($"{nameof(Node<T>)}'s value is null"); Unsure if ToString should ever throw an exception
         }
 
         public void InsertAtEnd(T value)
@@ -45,21 +45,21 @@
 
         public void Insert(T value)
         {
-            if (this.Next == this)
+            if (Next == this)
             {
-                this.Next = new Node<T>(value);
+                Next = new Node<T>(value);
             }
             else
             {
-                Node<T> temp = this.Next;
-                this.Next = new Node<T>(value);
-                this.Next.Next = temp;
+                Node<T> temp = Next;
+                Next = new Node<T>(value);
+                Next.Next = temp;
             }
         }
 
         public void Clear()
         {
-            this.Next = this;
+            Next = this;
             /* As long as there are no other references
              * to any of the nodes from other sources (I.E)
              * Node<T> node = definedNode.Next;
