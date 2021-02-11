@@ -48,12 +48,19 @@
             if (Next == this)
             {
                 Next = new Node<T>(value);
+                // To circle back to first node
+                // Next.Next = this;
             }
             else
             {
                 Node<T> temp = Next;
-                Next = new Node<T>(value);
-                Next.Next = temp;
+                while (temp != temp.Next)
+                {
+                    temp = Next.Next;
+                }
+                temp.Next = new Node<T>(value);
+                // To circle back to first node
+                // temp.Next.Next = this;
             }
         }
 

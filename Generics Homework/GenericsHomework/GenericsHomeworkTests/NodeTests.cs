@@ -74,11 +74,13 @@ namespace GenericsHomework.Tests
         public void Insert_GivenMultipleNodes_LastNodeInsertedIsAfterFirstNode()
         {
             Node<int> node = new(42);
-            node.Insert(44);
             node.Insert(43);
+            node.Insert(44);
+            node.Insert(45);
 
             Assert.AreEqual<int>(43, node.Next.Value);
             Assert.AreEqual<int>(44, node.Next.Next.Value);
+            Assert.AreEqual<int>(45, node.Next.Next.Next.Value);
         }
 
         [TestMethod]
