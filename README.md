@@ -79,7 +79,10 @@ Recommended But **Not** Required (in order of priority)
 - Don't forget the list should be unique. ❌✔
 - It is recommended that at a minimum you use `ISampleData.GetUniqueSortedListOfStatesGivenCsvRows` to validate your result.
 
-1. Given the implementation of `Node` in Assignment5, implement `IEnumerable<T>`. ❌✔
+1. Given the implementation of `Node` in Assignment5
+
+- Implement `IEnumerable<T>` to return all the items in the "circle" of items. ❌✔
+- Add an `IEnumberable<T> ChildItems(int maximum)` method to `Node` that returns the remaining items with a maximum number of items returned less than `maximum`.  
 
 ## Extra Credit
 
