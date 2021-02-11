@@ -68,6 +68,7 @@ namespace GenericsHomework.Tests
             node.Insert(43);
 
             Assert.AreEqual<int>(43, node.Next.Value);
+            Assert.AreEqual<int>(42, node.Next.Next.Value);
         }
 
         [TestMethod]
@@ -81,6 +82,7 @@ namespace GenericsHomework.Tests
             Assert.AreEqual<int>(43, node.Next.Value);
             Assert.AreEqual<int>(44, node.Next.Next.Value);
             Assert.AreEqual<int>(45, node.Next.Next.Next.Value);
+            Assert.AreEqual<int>(42, node.Next.Next.Next.Next.Value);
         }
 
         [TestMethod]
