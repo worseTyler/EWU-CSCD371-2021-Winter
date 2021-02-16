@@ -12,21 +12,36 @@ namespace Assignment
         {
             get
             {
-                string[] lines = File.ReadAllLines("../../../../Assignment/People.csv");
+                string[] lines = File.ReadAllLines("People.csv");
                 return lines.Skip(1).Distinct();
             }
         }
 
         // 2.
-        public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows() 
-            => throw new NotImplementedException();
+        public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows()
+            => CsvRows.Select(item =>
+            {
+                string[] strings = item.Split(',');
+                if (strings.Length > 7 && strings[6].Length == 2)
+                    return strings[6];
+                return string.Empty;
+            })
+            .Where(item => !(string.IsNullOrWhiteSpace(item)))
+            .Distinct()
+            .OrderBy(item => item);
 
         // 3.
         public string GetAggregateSortedListOfStatesUsingCsvRows()
-            => throw new NotImplementedException();
-
+            => string.Join(", ", GetUniqueSortedListOfStatesGivenCsvRows().ToArray());
         // 4.
-        public IEnumerable<IPerson> People => throw new NotImplementedException();
+        public IEnumerable<IPerson> People => CsvRows.Select(item =>
+        {
+            string[] items = item.Split(',');
+            Person person = new(items[1], items[2], new Address(items[4], items[5], items[6], items[7]), items[4]);
+            return person;
+        }).OrderBy(item => item.Address.State)
+            .ThenBy(item => item.Address.City)
+            .ThenBy(item => item.Address.Zip);
 
         // 5.
         public IEnumerable<(string FirstName, string LastName)> FilterByEmailAddress(
