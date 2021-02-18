@@ -37,7 +37,7 @@ namespace Assignment
         public IEnumerable<IPerson> People => CsvRows.Select(item =>
         {
             string[] items = item.Split(',');
-            Person person = new(items[1], items[2], new Address(items[4], items[5], items[6], items[7]), items[4]);
+            Person person = new(items[1], items[2], new Address(items[4], items[5], items[6], items[7]), items[3]);
             return person;
         }).OrderBy(item => item.Address.State)
             .ThenBy(item => item.Address.City)
@@ -45,10 +45,14 @@ namespace Assignment
 
         // 5.
         public IEnumerable<(string FirstName, string LastName)> FilterByEmailAddress(
-            Predicate<string> filter) => throw new NotImplementedException();
+            Predicate<string> filter) => People.Where(item => filter(item.EmailAddress)).Select(item => (item.FirstName, item.LastName));
 
         // 6.
         public string GetAggregateListOfStatesGivenPeopleCollection(
-            IEnumerable<IPerson> people) => throw new NotImplementedException();
+            IEnumerable<IPerson> people) => people.Select(item => item.Address.State).Distinct().Aggregate(string.Empty, (item, next) =>
+            {
+                item += next;
+                item += ", ";
+            });
     }
 }
