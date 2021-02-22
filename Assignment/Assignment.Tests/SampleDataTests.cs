@@ -20,6 +20,7 @@ namespace Assignment.Tests
 
             Assert.AreEqual("1,Priscilla,Jenyns,pjenyns0@state.gov,7884 Corry Way,Helena,MT,70577", enumerable.First());
         }
+
         [TestMethod]
         public void GetUniqueSortedListOFStatesGivenCsvRows_HardCodedList_ReturnsList()
         {
@@ -113,7 +114,7 @@ namespace Assignment.Tests
             SampleData sampleData = new();
             string actual = sampleData.GetAggregateListOfStatesGivenPeopleCollection(sampleData.People);
 
-            string expected = string.Join(', ', sampleData.GetUniqueSortedListOfStatesGivenCsvRows().ToArray());
+            string expected = string.Join(", ", sampleData.GetUniqueSortedListOfStatesGivenCsvRows().ToArray());
 
             Assert.AreEqual<string>(expected, actual);
         }
