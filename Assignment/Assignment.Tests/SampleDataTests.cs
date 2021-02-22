@@ -20,11 +20,7 @@ namespace Assignment.Tests
 
             Assert.AreEqual("1,Priscilla,Jenyns,pjenyns0@state.gov,7884 Corry Way,Helena,MT,70577", enumerable.First());
         }
-        [TestMethod]
-        public void GetUniqueSortedListOFStatesGivenCsvRows_HardCodedList_ReturnsList()
-        {
-            throw new NotImplementedException();
-        }
+
         [TestMethod]
         public void GetUniqueSortedListOFStatesGivenCsvRows_UsingLinq_ReturnsOrderedList()
         {
@@ -103,8 +99,8 @@ namespace Assignment.Tests
         public void FilterByEmailAddress_GivenInvalidPredicate_Returns()
         {
             SampleData sampleData = new();
-            IEnumerable<(string, string)> actual = sampleData.FilterByEmailAddress(item => item.Contains("no one has this in their email"));
-            Console.Write(actual.First().Item1);
+            IEnumerable<(string FirstName, string LastName)> actual = sampleData.FilterByEmailAddress(item => item.Contains("no one has this in their email"));
+            Console.Write(actual.First().FirstName);
         }
 
         [TestMethod]
@@ -113,7 +109,7 @@ namespace Assignment.Tests
             SampleData sampleData = new();
             string actual = sampleData.GetAggregateListOfStatesGivenPeopleCollection(sampleData.People);
 
-            string expected = string.Join(', ', sampleData.GetUniqueSortedListOfStatesGivenCsvRows().ToArray());
+            string expected = string.Join(", ", sampleData.GetUniqueSortedListOfStatesGivenCsvRows().ToArray());
 
             Assert.AreEqual<string>(expected, actual);
         }
