@@ -53,6 +53,7 @@ namespace Assignment
             {
                 item += next;
                 item += ", ";
-            });
+                return item;
+            }).TrimEnd().TrimEnd(',');
     }
 }
