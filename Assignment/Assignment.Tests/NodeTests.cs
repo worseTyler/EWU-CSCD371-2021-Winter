@@ -29,7 +29,7 @@ namespace Assignment.Tests
         {
             Node<int?> node = new(null);
             string output = node.ToString();
-            Assert.AreEqual<string>("Null", output);
+            Assert.AreEqual<string>(string.Empty, output);
         }
 
         [TestMethod]

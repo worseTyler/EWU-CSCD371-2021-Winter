@@ -45,7 +45,7 @@ namespace Assignment
 
         // 5.
         public IEnumerable<(string FirstName, string LastName)> FilterByEmailAddress(
-            Predicate<string> filter) => People.Where(item => filter(item.EmailAddress)).Select(item => (item.FirstName, LastName: item.LastName));
+            Predicate<string> filter) => People.Where(item => filter(item.EmailAddress)).Select(item => (item.FirstName, item.LastName));
 
         // 6.
         public string GetAggregateListOfStatesGivenPeopleCollection(
@@ -54,6 +54,6 @@ namespace Assignment
                 item += next;
                 item += ", ";
                 return item;
-            }).TrimEnd().TrimEnd(',');
+            }).TrimEnd(',', ' ');
     }
 }

@@ -34,7 +34,7 @@ namespace Assignment
 
         public override string ToString()
         {
-            return Value?.ToString() ?? "Null"; //throw new ArgumentNullException($"{nameof(Node<T>)}'s value is null"); Unsure if ToString should ever throw an exception
+			return Value?.ToString() ?? string.Empty; //throw new ArgumentNullException($"{nameof(Node<T>)}'s value is null"); Unsure if ToString should ever throw an exception
         }
 
         public void InsertAtEnd(T value)
@@ -98,14 +98,7 @@ namespace Assignment
 
         public IEnumerable<T> ChildItems(int maximum)
         {
-            Node<T> traverse = this;
-            int counter = 0;
-            do
-            {
-                yield return traverse.Value;
-                traverse = traverse.Next;
-                counter++;
-            } while (traverse != this && counter < maximum);
+			return this.AsEnumerable<T>().Take(maximum);
         }
     }
 } 

@@ -27,7 +27,8 @@ namespace Assignment.Tests
             SampleData sampleData = new();
             IEnumerable<string> states = sampleData.GetUniqueSortedListOfStatesGivenCsvRows();
 
-            bool result = states.SequenceEqual(states.OrderBy(item => item));
+            // Comparing the states content with itself after "manually" distinct/ordered
+			bool result = states.SequenceEqual(states.Distinct().OrderBy(item => item));
 
             Assert.IsTrue(result);
         }
@@ -46,16 +47,14 @@ namespace Assignment.Tests
         public void People_GivenRows_CreatesSortedPeopleEnum()
         {
             SampleData sampleData = new();
-            IEnumerable<IPerson> actual = sampleData.CsvRows.Select(item =>
-            {
-                string[] items = item.Split(',');
-                Person person = new(items[1], items[2], new Address(items[4], items[5], items[6], items[7]), items[3]);
-                return person;
-            }).OrderBy(item => item.Address.State)
-            .ThenBy(item => item.Address.City)
-            .ThenBy(item => item.Address.Zip);
+			IEnumerable<IPerson> actual = sampleData.People;
 
-            IEnumerable<(IPerson,IPerson)> output = actual.Zip(sampleData.People);
+			IEnumerable<IPerson> expected = sampleData.People
+				.OrderBy(item => item.Address.State)
+				.ThenBy(item => item.Address.City)
+				.ThenBy(item => item.Address.Zip);
+
+			IEnumerable<(IPerson,  IPerson)> output = actual.Zip(expected);
 
             Assert.IsTrue(output.All(item =>
                 (item.Item1.FirstName == item.Item2.FirstName) &&
@@ -100,7 +99,7 @@ namespace Assignment.Tests
         {
             SampleData sampleData = new();
             IEnumerable<(string FirstName, string LastName)> actual = sampleData.FilterByEmailAddress(item => item.Contains("no one has this in their email"));
-            Console.Write(actual.First().FirstName);
+            Assert.AreEqual<int>(0, actual.Count());
         }
 
         [TestMethod]
