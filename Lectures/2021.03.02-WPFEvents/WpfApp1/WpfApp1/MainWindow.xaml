@@ -5,41 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Topmost="True"
         Title="MainWindow" Height="550" Width="800">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolConverter"/>
+        <local:InverseBooleanToVisibilityConverter x:Key="InverseBoolConverter"/>
+    </Window.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <!-- Default Height is 1* -->
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <Button Content="Content"
-                x:Name="MyButton"
-                Grid.Row="0"
-                Click="MyButton_Click"/>
-        <TextBlock x:Name="MyTextBlock" 
-                   FontSize="42" 
-                   Grid.Row="1"
-                   Background="Fuchsia"
-                   Text="Hello World!" 
-                   TextWrapping="Wrap" />
-        
-        <ListBox x:Name="MyListBox" 
-                 Grid.Column="1"
-                 Grid.RowSpan="2" 
-                 KeyDown="MyListBox_KeyDown"/>
+        <StackPanel VerticalAlignment="Center" 
+                    HorizontalAlignment="Center"
+                    MinWidth="200"
+                    Visibility="{Binding IsLoggedIn, Converter={StaticResource InverseBoolConverter}}">
+            <TextBlock Text="User Name" />
+            <TextBox Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock Text="Password" />
+            <TextBox Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Content="Login" Command="{Binding LoginCommand}" />
+        </StackPanel>
 
-        <Button Grid.Row="1" Grid.Column="1"
-                VerticalAlignment="Bottom" 
-                HorizontalAlignment="Right"
-                Content="Close"
-                x:Name="CloseButton" 
-                Padding="5,10,2,10"
-                Margin="10"
-                Click="CloseButton_Click"/>
+        <TextBlock Text="{Binding UserName, StringFormat='Hello {0}'}"
+                   VerticalAlignment="Center" 
+                   HorizontalAlignment="Center"
+                   Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolConverter}}"/>
     </Grid>
 </Window>
