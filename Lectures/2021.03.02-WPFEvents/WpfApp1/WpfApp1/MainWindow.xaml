@@ -3,28 +3,45 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfApp1"
+        xmlns:local="clr-namespace:WpfApp1" 
+        d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" Height="550" Width="800">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolConverter"/>
         <local:InverseBooleanToVisibilityConverter x:Key="InverseBoolConverter"/>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Times New Roman" />
+            <Setter Property="Foreground" Value="Fuchsia" />
+        </Style>
+
+        <Style x:Key="HeadingStyle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+            <Setter Property="FontSize" Value="20" />
+        </Style>
     </Window.Resources>
     <Grid>
         <StackPanel VerticalAlignment="Center" 
                     HorizontalAlignment="Center"
                     MinWidth="200"
                     Visibility="{Binding IsLoggedIn, Converter={StaticResource InverseBoolConverter}}">
+            <StackPanel.Resources>
+                <Style TargetType="TextBlock" BasedOn="{StaticResource HeadingStyle}">
+                    <Setter Property="Margin" Value="0,10,0,10" />
+                </Style>
+            </StackPanel.Resources>
             <TextBlock Text="User Name" />
-            <TextBox Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock Text="Password" />
-            <TextBox Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}" />
             <Button Content="Login" Command="{Binding LoginCommand}" />
         </StackPanel>
 
-        <TextBlock Text="{Binding UserName, StringFormat='Hello {0}'}"
-                   VerticalAlignment="Center" 
-                   HorizontalAlignment="Center"
-                   Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolConverter}}"/>
+        <StackPanel Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolConverter}}">
+            <TextBlock Text="{Binding UserName, StringFormat='Hello {0}'}"
+                       VerticalAlignment="Center" 
+                       HorizontalAlignment="Center" />
+            <Button Content="Logout" Command="{Binding LogoutCommand}" />
+        </StackPanel>
     </Grid>
 </Window>

@@ -11,7 +11,7 @@ namespace WpfApp1
         public event PropertyChangedEventHandler PropertyChanged;
 
         public RelayCommand LoginCommand { get; }
-        public ICommand LogoutCommand { get; }
+        public RelayCommand LogoutCommand { get; }
 
         private string _UserName;
         public string UserName
@@ -43,7 +43,13 @@ namespace WpfApp1
         public bool IsLoggedIn
         {
             get => _IsLoggedIn;
-            set => SetProperty(ref _IsLoggedIn, value);
+            set
+            {
+                if (SetProperty(ref _IsLoggedIn, value))
+                {
+                    LogoutCommand.RaiseCanExecuteChanged();
+                }
+            }
         }
 
         private bool SetProperty<T>(ref T field, T newValue, [CallerMemberName]string propertyName = "")
@@ -60,6 +66,7 @@ namespace WpfApp1
         public MainWindowViewModel()
         {
             LoginCommand = new RelayCommand(DoLogin, CanLogin);
+            LogoutCommand = new RelayCommand(DoLogout, CanLogout);
         }
         //We do login here... trust me
         public void DoLogin()
@@ -68,6 +75,7 @@ namespace WpfApp1
                 string.Equals(Password, "S3cr3t", StringComparison.Ordinal))
             {
                 IsLoggedIn = true;
+                return;
             }
             IsLoggedIn = false;
         }
@@ -76,6 +84,16 @@ namespace WpfApp1
         {
             return !string.IsNullOrWhiteSpace(UserName) &&
                    !string.IsNullOrWhiteSpace(Password);
+        }
+
+        public void DoLogout()
+        {
+            IsLoggedIn = false;
+        }
+
+        public bool CanLogout()
+        {
+            return IsLoggedIn;
         }
     }
 
