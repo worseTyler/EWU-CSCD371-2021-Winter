@@ -6,7 +6,6 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
-[assembly: Parallelize(Workers = 4, Scope = ExecutionScope.ClassLevel)] // I found this online to run tests in parallel but I'm not sure where to put it
 namespace Assignment7
 {
     [TestClass]

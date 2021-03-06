@@ -49,7 +49,7 @@ namespace Assignment7
     public class Program
     {
         static int _Total = int.MaxValue;
-        static int _Count = 0;
+        static int _UnsyncCount = 0;
 
         public static int Unsynchronized(string[] args)
         {
@@ -63,13 +63,13 @@ namespace Assignment7
             // Increment
             for (int i = 0; (i < _Total); i++)
             {
-                _Count++;
+                _UnsyncCount++;
             }
 
             task.Wait();
-            Console.WriteLine($"Count = {_Count}");
+            Console.WriteLine($"Count = {_UnsyncCount}");
 
-            return _Count;
+            return _UnsyncCount;
         }
 
         static void Decrement()
@@ -77,10 +77,11 @@ namespace Assignment7
             // Decrement
             for (int i = 0; i < _Total; i++)
             {
-                _Count--;
+                _UnsyncCount--;
             }
         }
         readonly static object Lock = new object();
+        public static int _LockCount = 0;
         public static int SynchronizedLock(string[] args)
         {
             if (args?.Length > 0) { int.TryParse(args[0], out _Total); }
@@ -95,14 +96,14 @@ namespace Assignment7
             {
                 lock (Lock)
                 {
-                    _Count++;
+                    _LockCount++;
                 }
             }
 
             task.Wait();
-            Console.WriteLine($"Count = {_Count}");
+            Console.WriteLine($"Count = {_LockCount}");
 
-            return _Count;
+            return _LockCount;
         }
 
         static void DecrementLock()
@@ -112,11 +113,12 @@ namespace Assignment7
             {
                 lock (Lock)
                 {
-                    _Count--;
+                    _LockCount--;
                 }
             }
         }
 
+        public static int _InterlockedCount = 0;
         public static int SynchronizedInterlocked(string[] args)
         {
             if (args?.Length > 0) { int.TryParse(args[0], out _Total); }
@@ -129,13 +131,13 @@ namespace Assignment7
             // Increment
             for (int i = 0; (i < _Total); i++)
             {
-                Interlocked.Increment(ref _Count);
+                Interlocked.Increment(ref _InterlockedCount);
             }
 
             task.Wait();
-            Console.WriteLine($"Count = {_Count}");
+            Console.WriteLine($"Count = {_InterlockedCount}");
 
-            return _Count;
+            return _InterlockedCount;
         }
 
         static void DecrementInterlocked()
@@ -143,7 +145,7 @@ namespace Assignment7
             // Decrement
             for (int i = 0; i < _Total; i++)
             {
-                Interlocked.Decrement(ref _Count);
+                Interlocked.Decrement(ref _InterlockedCount);
             }
         }
 
