@@ -51,13 +51,13 @@ namespace Tracking_Application
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            if(CurrentDescription == string.Empty && TimerText.Text == "00:00:00")
+            if(CurrentDescription == string.Empty && TimerText.Text == "0:00:00")
                     return;
             Timer.Stop();
             Records.Add((TimerAttributes.GetString(), CurrentDescription));
             TimerAttributes.ResetTimer();
             DescriptionBox.Text = String.Empty;
-            TimerText.Text = "00:00:00";
+            TimerText.Text = "0:00:00";
             RecordsToApplication();
         }
 
