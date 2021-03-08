@@ -18,22 +18,45 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
+        <Button Content="Start" HorizontalAlignment="Left" VerticalAlignment="Center" Click="StartButton_Click" Margin="20,0,0,0" />
+        <Button Content="Stop" HorizontalAlignment="Center" VerticalAlignment="Center" Click="StopButton_Click"/>
+        <Button Content="Save" HorizontalAlignment="Right" VerticalAlignment="Center" Click="SaveButton_Click" Margin="0,0,20,0"/>
+
         <TextBlock HorizontalAlignment="Center" 
                    Text="00:00:00" 
                    TextWrapping="Wrap" 
                    VerticalAlignment="Center"
                    Grid.Row="1"
-                   x:Name="TimerText" FontSize="36" FontFamily="Arial Black"/>
+                   x:Name="TimerText" FontSize="50" FontFamily="Arial Black"/>
         <StackPanel Grid.Row="2">
-            <TextBlock Text="Description" />
-            <TextBox HorizontalAlignment="Left" 
+            <TextBlock Text="Description"/>
+            <TextBox 
                      Grid.Row="2" 
                      TextWrapping="Wrap"
                      AcceptsReturn="True"
-                     VerticalContentAlignment="Stretch"
                      Background="NavajoWhite"
-                         />
+                     x:Name="DescriptionBox"
+                     HorizontalAlignment="Stretch"
+                     />
         </StackPanel>
+        <StackPanel Grid.Column="1">
+            <TextBlock Grid.Column="1" Text="Timer One" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Center" Text="" TextWrapping="Wrap" VerticalAlignment="Top" x:Name="SavedTimerOne"/>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Center" Text="" TextWrapping="Wrap" VerticalAlignment="Top" x:Name="SavedDescriptionOne"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Grid.Row="1">
+            <TextBlock Grid.Column="1" Text="Timer Two" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Center" Text="" TextWrapping="Wrap" VerticalAlignment="Top" x:Name="SavedTimerTwo"/>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Center" Text="" TextWrapping="Wrap" VerticalAlignment="Top" x:Name="SavedDescriptionTwo"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Grid.Row="2">
+            <TextBlock Grid.Column="1" Text="Timer Three" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Center" Text="" TextWrapping="Wrap" VerticalAlignment="Top" x:Name="SavedTimerThree"/>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Center" Text="" TextWrapping="Wrap" VerticalAlignment="Top" x:Name="SavedDescriptionThree"/>
+        </StackPanel>
+
 
 
     </Grid>

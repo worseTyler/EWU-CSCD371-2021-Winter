@@ -21,19 +21,62 @@ namespace Tracking_Application
     /// </summary>
     public partial class MainWindow : Window
     {
+        public DispatcherTimer Timer = new DispatcherTimer();
+
+        public List<(string Timer, string Description)> Records = new();
+
+        public string CurrentDescription
+        {
+            get => DescriptionBox.Text;
+        }
+
         public MainWindow()
         {
             InitializeComponent();
-            DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(.5);
-            timer.Tick += Timer_Tick;
-            timer.Start();
+
+            Timer.Interval = new TimeSpan(0, 0, 1);
+            Timer.Tick += Timer_Tick;
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
             TimerAttributes.IncrementSecond();
             TimerText.Text = TimerAttributes.GetString();
+        }
+
+        private void StartButton_Click(object sender, RoutedEventArgs e) => Timer.Start();
+
+
+        private void StopButton_Click(object sender, RoutedEventArgs e) => Timer.Stop();
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(CurrentDescription == string.Empty && TimerText.Text == "00:00:00")
+                    return;
+            Timer.Stop();
+            Records.Add((TimerAttributes.GetString(), CurrentDescription));
+            TimerAttributes.ResetTimer();
+            DescriptionBox.Text = String.Empty;
+            TimerText.Text = "00:00:00";
+            RecordsToApplication();
+        }
+
+        private void RecordsToApplication()
+        {
+            SavedTimerOne.Text = Records[^1].Timer;
+            SavedDescriptionOne.Text = Records[^1].Description;
+
+            if (Records.Count > 1)
+            {
+                SavedTimerTwo.Text = Records[^2].Timer;
+                SavedDescriptionTwo.Text = Records[^2].Description;
+            }
+
+            if (Records.Count > 2)
+            {
+                SavedTimerThree.Text = Records[^3].Timer;
+                SavedDescriptionThree.Text = Records[^3].Description;
+            }
         }
     }
 
@@ -51,9 +94,8 @@ namespace Tracking_Application
             return $"{HoursSection}{MinutesSection}{SecondsSection}";
         }
 
-        public static void IncrementSecond()
-        {
-            TotalTime++;
-        }
+        public static void IncrementSecond() => TotalTime++;
+
+        public static void ResetTimer() => TotalTime = 0;
     }
 }
