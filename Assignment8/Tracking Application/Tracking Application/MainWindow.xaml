@@ -19,9 +19,45 @@
             <Setter Property="Foreground" Value="LightCoral"/>
             <Setter Property="Background" Value="DimGray"/>
             <Setter Property="Padding" Value="10,10,10,10"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                >
+                                <ContentPresenter HorizontalAlignment="Center" 
+                                                  VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" 
+                                     Value="True">
+                            <Setter Property="Background" 
+                                    Value="LightGray"/>
+                            </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="75"/>
         </Style>
+
+
     </Window.Resources>
-    <Grid Background="DimGray">
+    <Grid x:Name="MainGrid" Background="DimGray">
+        <Grid.Resources>
+            <Style x:Key="DeleteButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                <Setter Property="HorizontalAlignment" Value="Right"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="Padding" Value="5,5,5,5"/>
+                <Setter Property="Margin" Value="0,5,5,0"/>
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="Content" Value="X"/>
+                <Setter Property="Grid.Column" Value="1"/>
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="Width" Value="30"/>
+            </Style>
+        </Grid.Resources>
         <Grid.ColumnDefinitions >
         <ColumnDefinition></ColumnDefinition>
         <ColumnDefinition></ColumnDefinition>
@@ -62,7 +98,7 @@
         <TextBlock Grid.Column="1" Text="Timer One" HorizontalAlignment="Center"/>
         <TextBlock Grid.Column="1" HorizontalAlignment="Center" Text="" TextWrapping="Wrap" VerticalAlignment="Top" x:Name="SavedTimerOne"/>
         <TextBlock Grid.Column="1" HorizontalAlignment="Center" Text="" TextWrapping="Wrap" VerticalAlignment="Top" x:Name="SavedDescriptionOne"/>
-    </StackPanel>
+        </StackPanel>
 
     <StackPanel Grid.Column="1" Grid.Row="1">
         <TextBlock Grid.Column="1" Text="Timer Two" HorizontalAlignment="Center"/>
@@ -71,11 +107,14 @@
     </StackPanel>
 
     <StackPanel Grid.Column="1" Grid.Row="2">
-        <TextBlock Grid.Column="1" Text="Timer Three" HorizontalAlignment="Center"/>
-        <TextBlock Grid.Column="1" HorizontalAlignment="Center" Text="" TextWrapping="Wrap" VerticalAlignment="Top" x:Name="SavedTimerThree"/>
-        <TextBlock Grid.Column="1" HorizontalAlignment="Center" Text="" TextWrapping="Wrap" VerticalAlignment="Top" x:Name="SavedDescriptionThree"/>
+            <TextBlock Grid.Column="1" Text="Timer Three" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Center" Text="" TextWrapping="Wrap" VerticalAlignment="Top" x:Name="SavedTimerThree"/>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Center" Text="" TextWrapping="Wrap" VerticalAlignment="Top" x:Name="SavedDescriptionThree"/>
     </StackPanel>
-
+        
+    <Button Grid.Row="0" Style="{StaticResource DeleteButton}" Click="DeleteTop_Click" />
+    <Button Grid.Row="1" Style="{StaticResource DeleteButton}" Click="DeleteMiddle_Click"/>
+    <Button Grid.Row="2" Style="{StaticResource DeleteButton}" Click="DeleteBottom_Click"/>
 
 
     </Grid>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -21,7 +22,8 @@ namespace Tracking_Application
     /// </summary>
     public partial class MainWindow : Window
     {
-        public DispatcherTimer Timer = new DispatcherTimer();
+
+        public Timer Timer;
 
         public List<(string Timer, string Description)> Records = new();
 
@@ -34,18 +36,17 @@ namespace Tracking_Application
         {
             InitializeComponent();
 
-            Timer.Interval = new TimeSpan(0, 0, 1);
-            Timer.Tick += Timer_Tick;
+            Timer = new(1000);
+            Timer.Elapsed += Timer_Tick;
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
             TimerAttributes.IncrementSecond();
-            TimerText.Text = TimerAttributes.GetString();
+            Dispatcher.Invoke(() => TimerText.Text = TimerAttributes.GetString());
         }
 
         private void StartButton_Click(object sender, RoutedEventArgs e) => Timer.Start();
-
 
         private void StopButton_Click(object sender, RoutedEventArgs e) => Timer.Stop();
 
@@ -63,13 +64,26 @@ namespace Tracking_Application
 
         private void RecordsToApplication()
         {
-            SavedTimerOne.Text = Records[^1].Timer;
-            SavedDescriptionOne.Text = Records[^1].Description;
+            if(Records.Count > 0)
+            {
+                SavedTimerOne.Text = Records[^1].Timer;
+                SavedDescriptionOne.Text = Records[^1].Description;
+            }
+            else
+            {
+                SavedTimerOne.Text = String.Empty;
+                SavedDescriptionOne.Text = String.Empty;
+            }
 
             if (Records.Count > 1)
             {
                 SavedTimerTwo.Text = Records[^2].Timer;
                 SavedDescriptionTwo.Text = Records[^2].Description;
+            }
+            else
+            {
+                SavedTimerTwo.Text = String.Empty;
+                SavedDescriptionTwo.Text = String.Empty;
             }
 
             if (Records.Count > 2)
@@ -77,6 +91,35 @@ namespace Tracking_Application
                 SavedTimerThree.Text = Records[^3].Timer;
                 SavedDescriptionThree.Text = Records[^3].Description;
             }
+            else
+            {
+                SavedTimerThree.Text = String.Empty;
+                SavedDescriptionThree.Text = String.Empty;
+            }
+        }
+
+        // This feels really gross, I wish I could make a collection or array of
+        // delete buttons and then use the index to reduce code repetition
+        private void DeleteTop_Click(object sender, RoutedEventArgs e)
+        {
+            if (Records.Count > 0)
+                Records.RemoveAt(Records.Count - 1);
+            RecordsToApplication();
+                
+        }
+
+        private void DeleteMiddle_Click(object sender, RoutedEventArgs e)
+        {
+            if (Records.Count > 1)
+                Records.RemoveAt(Records.Count - 2);
+            RecordsToApplication();
+        }
+
+        private void DeleteBottom_Click(object sender, RoutedEventArgs e)
+        {
+            if (Records.Count > 2)
+                Records.RemoveAt(Records.Count - 3);
+            RecordsToApplication();
         }
     }
 
