@@ -2,6 +2,8 @@
 
 ## See [Docs](Docs)
 
+# DUE DATE FOR THIS ASSIGNMENT IS 11:59PM 3/16/2021.
+
 For this assignment we will create a contact app.
 The goal of the application is to build a WPF application using the [MVVM design pattern](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel).
 
