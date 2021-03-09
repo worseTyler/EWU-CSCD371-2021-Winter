@@ -15,27 +15,24 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
-namespace Tracking_Application
+namespace TrackingApplication
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const string StartTimer = "0:00:00";
+        public Timer Timer { get; set; }
 
-        public Timer Timer;
+        public List<(string Timer, string Description)> Records { get; private set; }
 
-        public List<(string Timer, string Description)> Records = new();
-
-        public string CurrentDescription
-        {
-            get => DescriptionBox.Text;
-        }
+        public string CurrentDescription { get => DescriptionBox.Text; }
 
         public MainWindow()
         {
             InitializeComponent();
-
+            Records = new();
             Timer = new(1000);
             Timer.Elapsed += Timer_Tick;
         }
@@ -52,13 +49,13 @@ namespace Tracking_Application
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            if(CurrentDescription == string.Empty && TimerText.Text == "0:00:00")
+            if(CurrentDescription.Length == 0 && TimerText.Text == StartTimer)
                     return;
             Timer.Stop();
             Records.Add((TimerAttributes.GetString(), CurrentDescription));
             TimerAttributes.ResetTimer();
             DescriptionBox.Text = String.Empty;
-            TimerText.Text = "0:00:00";
+            TimerText.Text = StartTimer;
             RecordsToApplication();
         }
 

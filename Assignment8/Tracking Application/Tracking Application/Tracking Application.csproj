@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
 	  <TargetFramework>net5.0-windows</TargetFramework>
-    <RootNamespace>Tracking_Application</RootNamespace>
+    <RootNamespace>TrackingApplication</RootNamespace>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
