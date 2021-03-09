@@ -25,5 +25,5 @@ A contact should have the following data:
 - Last modified time (this should be generated and not editable by the user)
 
 Extra Credit
-In addition to the default contact fields, allow for adding an arbitrary set of additional fields.
-App allows for savings and loading contacts using [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/get-started/overview/first-app?tabs=netcore-cli#install-entity-framework-core) (simply use SQLite): ✔❌
+- In addition to the default contact fields, allow for adding an arbitrary set of additional fields.
+- App allows for savings and loading contacts using [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/get-started/overview/first-app?tabs=netcore-cli#install-entity-framework-core) (simply use SQLite): ✔❌
