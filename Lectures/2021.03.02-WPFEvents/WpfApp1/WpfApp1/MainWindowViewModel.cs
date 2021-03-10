@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows.Input;
+using System.Threading.Tasks;
+using System.Windows.Data;
 
 namespace WpfApp1
 {
@@ -11,7 +13,10 @@ namespace WpfApp1
         public event PropertyChangedEventHandler PropertyChanged;
 
         public RelayCommand LoginCommand { get; }
-        public RelayCommand LogoutCommand { get; }
+        public RelayCommand LogoutCommand { get; } 
+        public RelayCommand NewCharacterCommand { get; }
+
+        public ObservableCollection<CharacterViewModel> Characters { get; } = new();
 
         private string _UserName;
         public string UserName
@@ -52,7 +57,14 @@ namespace WpfApp1
             }
         }
 
-        private bool SetProperty<T>(ref T field, T newValue, [CallerMemberName]string propertyName = "")
+        private CharacterViewModel _SelectedCharacter;
+        public CharacterViewModel SelectedCharacter
+        {
+            get => _SelectedCharacter;
+            set => SetProperty(ref _SelectedCharacter, value);
+        }
+
+        private bool SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = "")
         {
             if (!EqualityComparer<T>.Default.Equals(field, newValue))
             {
@@ -65,11 +77,49 @@ namespace WpfApp1
 
         public MainWindowViewModel()
         {
+            BindingOperations.EnableCollectionSynchronization(Characters, new object());
+
             LoginCommand = new RelayCommand(DoLogin, CanLogin);
             LogoutCommand = new RelayCommand(DoLogout, CanLogout);
+            NewCharacterCommand = new RelayCommand(DoNewCharacter, () => true);
+
+            Characters.Add(new()
+            {
+                Name = "Markopolis",
+                Age = 42
+            });
+            Characters.Add(new()
+            {
+                Name = "Stokeberry",
+                Age = 21
+            });
         }
+
+        private async void DoNewCharacter()
+        {
+            try
+            {
+                await DoNewCharacterAsync();
+            }
+            catch(Exception e)
+            {
+                //TODO: 
+            }
+        }
+
+        private async Task DoNewCharacterAsync()
+        {
+            await Task.Delay(100);
+            await Task.Run(() =>
+            {
+                CharacterViewModel newCharacter = new() { Name = "TODO" };
+                Characters.Add(newCharacter);
+                SelectedCharacter = newCharacter;
+            });
+        }
+
         //We do login here... trust me
-        public void DoLogin()
+        private void DoLogin()
         {
             if (string.Equals(UserName, "Kevin", StringComparison.OrdinalIgnoreCase) &&
                 string.Equals(Password, "S3cr3t", StringComparison.Ordinal))
@@ -80,37 +130,28 @@ namespace WpfApp1
             IsLoggedIn = false;
         }
 
-        public bool CanLogin()
+        private bool CanLogin()
         {
             return !string.IsNullOrWhiteSpace(UserName) &&
                    !string.IsNullOrWhiteSpace(Password);
         }
 
-        public void DoLogout()
+        private void DoLogout()
         {
             IsLoggedIn = false;
         }
 
-        public bool CanLogout()
+        private bool CanLogout()
         {
             return IsLoggedIn;
         }
     }
 
-    public class RelayCommand : ICommand
+    public class CharacterViewModel
     {
-        private Action ExecuteDelegate { get; }
-        private Func<bool> CanExecuteDelegate { get; }
+        public string Name { get; set; }
+        public int Age { get; set; }
 
-        public void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
-        public event EventHandler CanExecuteChanged;
-
-        public bool CanExecute(object parameter) => CanExecuteDelegate.Invoke();
-        public void Execute(object parameter) => ExecuteDelegate.Invoke();
-        public RelayCommand(Action executeDelegate, Func<bool> canExecuteDelegate)
-        {
-            ExecuteDelegate = executeDelegate ?? throw new ArgumentNullException(nameof(executeDelegate));
-            CanExecuteDelegate = canExecuteDelegate ?? throw new ArgumentNullException(nameof(canExecuteDelegate));
-        }
+        public string Display => $"{Name} ({Age})";
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1" 
         d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
-        mc:Ignorable="d"
+        mc:Ignorable="d" 
         Title="MainWindow" Height="550" Width="800">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolConverter"/>
@@ -19,7 +19,42 @@
         <Style x:Key="HeadingStyle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
             <Setter Property="FontSize" Value="20" />
         </Style>
+
+        <DataTemplate x:Key="CharacterDetailsTemplate" DataType="{x:Type local:CharacterViewModel}">
+            <StackPanel>
+                <TextBlock Text="Name" />
+                <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Text="Age" />
+                <TextBox Text="{Binding Age, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="CharacterListTemplate" DataType="{x:Type local:CharacterViewModel}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Border Background="Blue" />
+
+                <TextBlock Grid.Column="1">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0} ({1})">
+                            <Binding Path="Name" />
+                            <Binding Path="Age" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <!--<TextBlock Text="{Binding Name}" Grid.Column="1"/>
+                            <TextBlock Text="{Binding Age}" Grid.Column="2"/>-->
+            </Grid>
+        </DataTemplate>
     </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static ApplicationCommands.Close}"
+                        CanExecute="CommandBinding_CanExecute"
+                        Executed="CommandBinding_Executed" />
+    </Window.CommandBindings>
     <Grid>
         <StackPanel VerticalAlignment="Center" 
                     HorizontalAlignment="Center"
@@ -37,11 +72,61 @@
             <Button Content="Login" Command="{Binding LoginCommand}" />
         </StackPanel>
 
-        <StackPanel Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolConverter}}">
-            <TextBlock Text="{Binding UserName, StringFormat='Hello {0}'}"
+        <Grid Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolConverter}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition />
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                <MenuItem Header="_File">
+                    <MenuItem Header="_New" Command="{Binding NewCharacterCommand}" />
+                    <MenuItem Header="E_xit" Command="{x:Static ApplicationCommands.Close}"/>
+                </MenuItem>
+            </Menu>
+
+            <ListBox ItemsSource="{Binding Characters}"
+                     FontSize="20"
+                     Grid.Row="1"
+                     SelectedItem="{Binding SelectedCharacter}"
+                     x:Name="MyListBox"
+                     SelectionChanged="ListBox_SelectionChanged"
+                     ItemTemplate="{StaticResource CharacterListTemplate}">
+                <ListBox.InputBindings>
+                    <KeyBinding Key="X" Command="{x:Static ApplicationCommands.Close}" />
+                    <KeyBinding Gesture="Ctrl+G" Command="{Binding MyCopyCommand}" />
+                </ListBox.InputBindings>
+            </ListBox>
+
+            <Grid Grid.Column="1" Grid.Row="1">
+                <ContentControl Content="{Binding SelectedCharacter}" 
+                                ContentTemplate="{StaticResource CharacterDetailsTemplate}">
+                    <ContentControl.Style>
+                        <Style TargetType="ContentControl">
+                            <Style.Triggers>
+                                <!--<Trigger Property="Content" Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </Trigger>-->
+                                <DataTrigger Binding="{Binding SelectedCharacter}" Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ContentControl.Style>
+                </ContentControl>
+            </Grid>
+            
+            <StackPanel VerticalAlignment="Bottom" Grid.Row="2" Grid.ColumnSpan="2">
+                <TextBlock Text="{Binding UserName, StringFormat='Hello {0}'}"
                        VerticalAlignment="Center" 
                        HorizontalAlignment="Center" />
-            <Button Content="Logout" Command="{Binding LogoutCommand}" />
-        </StackPanel>
+                <Button Content="Logout" Command="{Binding LogoutCommand}" />
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>
