@@ -95,7 +95,6 @@
                      Grid.Row="1"
                      SelectedItem="{Binding SelectedCharacter}"
                      x:Name="MyListBox"
-                     SelectionChanged="ListBox_SelectionChanged"
                      ItemTemplate="{StaticResource CharacterListTemplate}">
                 <ListBox.InputBindings>
                     <KeyBinding Key="X" Command="{x:Static ApplicationCommands.Close}" />

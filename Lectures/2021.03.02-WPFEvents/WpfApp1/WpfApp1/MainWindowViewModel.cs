@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
@@ -64,6 +65,8 @@ namespace WpfApp1
             set => SetProperty(ref _SelectedCharacter, value);
         }
 
+        private ITaskScheduler TaskScheduler { get; }
+
         private bool SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = "")
         {
             if (!EqualityComparer<T>.Default.Equals(field, newValue))
@@ -75,8 +78,9 @@ namespace WpfApp1
             return false;
         }
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(ITaskScheduler taskScheduler)
         {
+            TaskScheduler = taskScheduler ?? throw new ArgumentNullException(nameof(taskScheduler));
             BindingOperations.EnableCollectionSynchronization(Characters, new object());
 
             LoginCommand = new RelayCommand(DoLogin, CanLogin);
@@ -109,9 +113,9 @@ namespace WpfApp1
 
         private async Task DoNewCharacterAsync()
         {
-            await Task.Delay(100);
-            await Task.Run(() =>
+            await TaskScheduler.Run(async () =>
             {
+                await TaskScheduler.Delay(100);
                 CharacterViewModel newCharacter = new() { Name = "TODO" };
                 Characters.Add(newCharacter);
                 SelectedCharacter = newCharacter;
@@ -147,11 +151,15 @@ namespace WpfApp1
         }
     }
 
-    public class CharacterViewModel
+    public class TaskScheduler : ITaskScheduler
     {
-        public string Name { get; set; }
-        public int Age { get; set; }
+        public Task Delay(int millisecondsDelay) => Task.Delay(millisecondsDelay);
+        public Task Run(Func<Task> action) => Task.Run(action);
+    }
 
-        public string Display => $"{Name} ({Age})";
+    public interface ITaskScheduler
+    {
+        Task Run(Func<Task> action);
+        Task Delay(int millisecondsDelay);
     }
 }

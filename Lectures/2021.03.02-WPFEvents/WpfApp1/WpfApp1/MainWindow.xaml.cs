@@ -11,7 +11,7 @@ namespace WpfApp1
         private MainWindowViewModel ViewModel { get; }
         public MainWindow()
         {
-            DataContext = ViewModel = new MainWindowViewModel();
+            DataContext = ViewModel = new MainWindowViewModel(new TaskScheduler());
             InitializeComponent();
         }
 
@@ -23,11 +23,6 @@ namespace WpfApp1
         private void CommandBinding_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
         {
             Close();
-        }
-
-        private void ListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            ViewModel.SelectedItems = MyListBox.SelectedItems;
         }
     }
 }
