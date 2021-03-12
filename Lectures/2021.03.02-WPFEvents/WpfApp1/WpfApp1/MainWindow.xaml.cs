@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 namespace WpfApp1
 {
@@ -11,7 +12,11 @@ namespace WpfApp1
         private MainWindowViewModel ViewModel { get; }
         public MainWindow()
         {
-            DataContext = ViewModel = new MainWindowViewModel(new TaskScheduler());
+            var random = new Random();
+            DataContext = ViewModel = new MainWindowViewModel(new TaskScheduler(), () =>
+            {
+                return random.Next(1, 7).ToString();
+            });
             InitializeComponent();
         }
 

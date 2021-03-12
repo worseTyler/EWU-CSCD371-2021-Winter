@@ -92,7 +92,7 @@ namespace WpfApp1.Tests
             vm.Characters.CollectionChanged += (sender, e) =>
             {
 
-            }
+            };
 
             //Act
             command.Execute(null);
@@ -104,6 +104,27 @@ namespace WpfApp1.Tests
             Assert.AreEqual(vm.SelectedCharacter, vm.Characters.Last());
         }
 
-        
+        [TestMethod]
+        public void RollDiceCommand_GeneratesTwo()
+        {
+            //Arrange
+            ITaskScheduler taskScheduler = Mock.Of<ITaskScheduler>();
+            var vm = new MainWindowViewModel(taskScheduler, () => "2");
+            var command = vm.RollDiceCommand;
+            vm.DiceResult = "";
+
+            //Act
+            command.Execute(null);
+
+            //Assert
+            Assert.AreEqual("2", vm.DiceResult);
+        }
+
+        [TestMethod]
+        public void Dice_Returns_Four()
+        {
+            var random = new Random();
+            Assert.AreEqual(4, random.Next(1, 6));
+        }
     }
 }

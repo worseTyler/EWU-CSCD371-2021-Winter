@@ -98,11 +98,14 @@
                      ItemTemplate="{StaticResource CharacterListTemplate}">
                 <ListBox.InputBindings>
                     <KeyBinding Key="X" Command="{x:Static ApplicationCommands.Close}" />
-                    <KeyBinding Gesture="Ctrl+G" Command="{Binding MyCopyCommand}" />
                 </ListBox.InputBindings>
             </ListBox>
 
             <Grid Grid.Column="1" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
                 <ContentControl Content="{Binding SelectedCharacter}" 
                                 ContentTemplate="{StaticResource CharacterDetailsTemplate}">
                     <ContentControl.Style>
@@ -118,6 +121,11 @@
                         </Style>
                     </ContentControl.Style>
                 </ContentControl>
+
+                <StackPanel Orientation="Horizontal" Grid.Row="1">
+                    <Button Content="Roll Dice" Command="{Binding RollDiceCommand}"/>
+                    <TextBlock Text="{Binding DiceResult}" VerticalAlignment="Center" FontSize="20" Margin="10,0,0,0"/>
+                </StackPanel>
             </Grid>
             
             <StackPanel VerticalAlignment="Bottom" Grid.Row="2" Grid.ColumnSpan="2">

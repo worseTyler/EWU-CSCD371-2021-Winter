@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Security.Policy;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Data;
@@ -15,7 +16,8 @@ namespace WpfApp1
 
         public RelayCommand LoginCommand { get; }
         public RelayCommand LogoutCommand { get; } 
-        public RelayCommand NewCharacterCommand { get; }
+        public RelayCommand NewCharacterCommand { get; } 
+        public RelayCommand RollDiceCommand { get; }
 
         public ObservableCollection<CharacterViewModel> Characters { get; } = new();
 
@@ -65,7 +67,15 @@ namespace WpfApp1
             set => SetProperty(ref _SelectedCharacter, value);
         }
 
+        private string _DiceResult;
+        public string DiceResult
+        {
+            get => _DiceResult;
+            set => SetProperty(ref _DiceResult, value);
+        }
+
         private ITaskScheduler TaskScheduler { get; }
+        public Func<string> GetRandom { get; }
 
         private bool SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = "")
         {
@@ -78,14 +88,16 @@ namespace WpfApp1
             return false;
         }
 
-        public MainWindowViewModel(ITaskScheduler taskScheduler)
+        public MainWindowViewModel(ITaskScheduler taskScheduler, Func<string> getRandom = null)
         {
             TaskScheduler = taskScheduler ?? throw new ArgumentNullException(nameof(taskScheduler));
+            GetRandom = getRandom ?? throw new ArgumentNullException(nameof(getRandom));
             BindingOperations.EnableCollectionSynchronization(Characters, new object());
 
             LoginCommand = new RelayCommand(DoLogin, CanLogin);
             LogoutCommand = new RelayCommand(DoLogout, CanLogout);
             NewCharacterCommand = new RelayCommand(DoNewCharacter, () => true);
+            RollDiceCommand = new RelayCommand(DoRollDice, () => true);
 
             Characters.Add(new()
             {
@@ -97,6 +109,11 @@ namespace WpfApp1
                 Name = "Stokeberry",
                 Age = 21
             });
+        }
+
+        private void DoRollDice()
+        {
+            DiceResult = GetRandom();
         }
 
         private async void DoNewCharacter()
@@ -113,6 +130,10 @@ namespace WpfApp1
 
         private async Task DoNewCharacterAsync()
         {
+            //if (TaskScheduler is IFoo)
+            //{
+            //    ts.Timeout = 1_000;
+            //}
             await TaskScheduler.Run(async () =>
             {
                 await TaskScheduler.Delay(100);
@@ -155,6 +176,7 @@ namespace WpfApp1
     {
         public Task Delay(int millisecondsDelay) => Task.Delay(millisecondsDelay);
         public Task Run(Func<Task> action) => Task.Run(action);
+        public int Timeout { get; set; }
     }
 
     public interface ITaskScheduler
