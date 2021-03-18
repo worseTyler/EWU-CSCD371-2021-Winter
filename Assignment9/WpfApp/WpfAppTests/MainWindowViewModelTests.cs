@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Threading;
 
 namespace WpfApp.Tests
 {
@@ -71,9 +72,6 @@ namespace WpfApp.Tests
 
             Assert.IsFalse(mainWindowViewModel.IsEditContact);
             Assert.AreEqual<string>("Edit", mainWindowViewModel.EditSaveText);
-
-
-
         }
 
         [TestMethod]
@@ -91,6 +89,26 @@ namespace WpfApp.Tests
 
             Assert.IsFalse(mainWindowViewModel.IsEditContact);
             Assert.AreEqual<string>("Edit", mainWindowViewModel.EditSaveText);
+        }
+
+        [TestMethod]
+        public void EditContactCommand_WhenSavingCommand_UpdatesSelectedContactModifiedTime()
+        {
+            MainWindowViewModel mainWindowViewModel = new();
+            mainWindowViewModel.SelectedContact = mainWindowViewModel.Contacts[0];
+
+            mainWindowViewModel.IsEditContact = false;
+
+            string intialModifiedTime = mainWindowViewModel.SelectedContact.LastModifiedTime;
+            
+            Thread.Sleep(1000);
+
+            mainWindowViewModel.EditContactCommand.Action();
+            mainWindowViewModel.EditContactCommand.Action();
+
+            string finalModifiedTime = mainWindowViewModel.SelectedContact.LastModifiedTime;
+
+            Assert.AreNotEqual(intialModifiedTime, finalModifiedTime);
         }
     }
 }
