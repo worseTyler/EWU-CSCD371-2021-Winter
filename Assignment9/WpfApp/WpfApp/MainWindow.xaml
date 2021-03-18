@@ -26,7 +26,6 @@
 
         <Style TargetType="TextBlock" x:Key="TextBlockStyle">
             <Setter Property="FontSize" Value="18"/>
-            <Setter Property="Margin" Value="0,10,0,0"/>
         </Style>
         
         <local:EmptyStringConverter x:Key="EmptyStringConverter"/>
@@ -68,8 +67,8 @@
                 
                 <TextBox Text="{Binding TwitterName, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource TextBoxHide}"/>
-                
-                <TextBlock Text="{Binding LastModifiedTime, StringFormat='Last Modified @ {0}'}" 
+
+                <TextBlock Text="{Binding LastModifiedTime, UpdateSourceTrigger=PropertyChanged, StringFormat='{}Last Modified @ {0}'}" 
                            Visibility="{Binding LastModifiedTime, Converter={StaticResource EmptyStringConverter}}" 
                            Style="{StaticResource TextBlockStyle}"/>
                 
@@ -89,7 +88,7 @@
                 <TextBox Text="{Binding EmailAddress, UpdateSourceTrigger=PropertyChanged}" FontSize="18"/>
                     <TextBlock Text="Twitter Name" Style="{StaticResource TextBlockStyle}"/>
                 <TextBox Text="{Binding TwitterName, UpdateSourceTrigger=PropertyChanged}" FontSize="18"/>
-                    <TextBlock Text="{Binding LastModifiedTime, StringFormat='Last Modified @ {0}'}" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBlock Text="{Binding LastModifiedTime, UpdateSourceTrigger=PropertyChanged, StringFormat='{}Last Modified @ {0}'}" Style="{StaticResource TextBlockStyle}"/>
                 </StackPanel>
          </DataTemplate>
 

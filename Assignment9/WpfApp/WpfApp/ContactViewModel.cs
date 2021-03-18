@@ -17,7 +17,7 @@ namespace WpfApp
         public string? TwitterName { get; set; }
         private string _LastModifiedTime = DateTime.Now.ToString();
 
-        //public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
 
         public string LastModifiedTime
@@ -26,7 +26,7 @@ namespace WpfApp
             set
             {
                 _LastModifiedTime = DateTime.Now.ToString();
-                //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(_LastModifiedTime)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(_LastModifiedTime)));
             }
         }
 

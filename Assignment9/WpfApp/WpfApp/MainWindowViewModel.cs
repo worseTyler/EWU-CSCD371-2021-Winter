@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -110,7 +111,18 @@ namespace WpfApp
         private void EditContact()
         {
             IsEditContact = !IsEditContact;
-            SelectedContact.LastModifiedTime = string.Empty;
+            if (!IsEditContact)
+            {
+                SelectedContact = new ContactViewModel()
+                {
+                    FirstName = SelectedContact.FirstName,
+                    LastName = SelectedContact.LastName,
+                    EmailAddress = SelectedContact.EmailAddress,
+                    PhoneNumber = SelectedContact.PhoneNumber,
+                    TwitterName = SelectedContact.TwitterName,
+                    LastModifiedTime = DateTime.Now.ToString(),
+                };
+            }
         }
 
         private void UpdateEditText() => EditSaveText = (EditSaveText == "Edit" ? "Save" : "Edit");
