@@ -20,11 +20,11 @@ namespace WpfApp.Tests
         }
 
         [TestMethod]
-        public void NewContactCommand_SetsIsEditTrue()
+        public void NewContactCommand_SetsIsEditFalse()
         {
             MainWindowViewModel mainWindowViewModel = new();
             mainWindowViewModel.NewContactCommand.Action();
-            Assert.IsTrue(mainWindowViewModel.IsEditContact);
+            Assert.IsFalse(mainWindowViewModel.IsEditContact);
         }
 
         [TestMethod]
@@ -34,7 +34,7 @@ namespace WpfApp.Tests
             int initialContactLength = mainWindowViewModel.Contacts.Count;
             ContactViewModel contact = new()
             {
-                FirstName = "Not",
+                FirstName = "AAA",
                 LastName = "Jones",
                 EmailAddress = "notme@gmail.com",
                 PhoneNumber = "509-999-1234"
@@ -42,7 +42,7 @@ namespace WpfApp.Tests
 
 
             mainWindowViewModel.Contacts.Add(contact);
-            //mainWindowViewModel.SelectedContact = contact;
+            mainWindowViewModel.SelectedContact = contact;
 
 
             Assert.IsTrue(mainWindowViewModel.Contacts.Contains(contact));
@@ -51,7 +51,46 @@ namespace WpfApp.Tests
 
             Assert.AreEqual<int>(initialContactLength, mainWindowViewModel.Contacts.Count);
             Assert.IsFalse(mainWindowViewModel.Contacts.Contains(contact));
-           
+        }
+
+        [TestMethod]
+        public void EditContactCommand_SetsIsEditToOppositeOfCurrent()
+        {
+            MainWindowViewModel mainWindowViewModel = new();
+            mainWindowViewModel.SelectedContact = mainWindowViewModel.Contacts[0];
+
+            Assert.IsFalse(mainWindowViewModel.IsEditContact);
+            Assert.AreEqual<string>("Edit", mainWindowViewModel.EditSaveText);
+
+            mainWindowViewModel.EditContactCommand.Action();
+
+            Assert.IsTrue(mainWindowViewModel.IsEditContact);
+            Assert.AreEqual<string>("Save", mainWindowViewModel.EditSaveText);
+
+            mainWindowViewModel.NewContactCommand.Action();
+
+            Assert.IsFalse(mainWindowViewModel.IsEditContact);
+            Assert.AreEqual<string>("Edit", mainWindowViewModel.EditSaveText);
+
+
+
+        }
+
+        [TestMethod]
+        public void EditContactCommand_AddingNewContactSetsEditToFalse()
+        {
+            MainWindowViewModel mainWindowViewModel = new();
+            mainWindowViewModel.SelectedContact = mainWindowViewModel.Contacts[0];
+
+            Assert.IsFalse(mainWindowViewModel.IsEditContact);
+            Assert.AreEqual<string>("Edit", mainWindowViewModel.EditSaveText);
+
+            mainWindowViewModel.EditContactCommand.Action();
+
+            mainWindowViewModel.NewContactCommand.Action();
+
+            Assert.IsFalse(mainWindowViewModel.IsEditContact);
+            Assert.AreEqual<string>("Edit", mainWindowViewModel.EditSaveText);
         }
     }
 }

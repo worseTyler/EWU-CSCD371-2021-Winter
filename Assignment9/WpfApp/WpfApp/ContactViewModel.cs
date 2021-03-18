@@ -10,11 +10,11 @@ namespace WpfApp
     public class ContactViewModel
     {
 
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string PhoneNumber { get; set; }
-        public string EmailAddress { get; set; }
-        public string TwitterName { get; set; }
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+        public string? PhoneNumber { get; set; }
+        public string? EmailAddress { get; set; }
+        public string? TwitterName { get; set; }
         private string _LastModifiedTime = DateTime.Now.ToString();
 
         //public event PropertyChangedEventHandler PropertyChanged;
