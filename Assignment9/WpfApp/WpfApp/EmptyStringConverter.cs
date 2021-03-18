@@ -9,7 +9,7 @@ using System.Windows.Data;
 
 namespace WpfApp
 {
-    class EmptyStringConverter : IValueConverter
+    public class EmptyStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -22,7 +22,7 @@ namespace WpfApp
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException(); // Never will actually use
+            throw new NotImplementedException($"{nameof(value)} does not have a convert back in EmptyStringConverter");
         }
     }
 }

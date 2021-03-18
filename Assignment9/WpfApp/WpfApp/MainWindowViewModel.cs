@@ -34,13 +34,8 @@ namespace WpfApp
             get => _SelectedContact;
             set
             {
-
                 if (SetProperty(ref _SelectedContact, value))
-                {
-                    //UpdateListBox();
                     IsEditContact = false;
-                }
-
             }
         }
 
