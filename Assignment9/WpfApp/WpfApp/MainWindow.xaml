@@ -30,14 +30,9 @@
         </Style>
         
         <local:EmptyStringConverter x:Key="EmptyStringConverter"/>
+        
         <DataTemplate x:Key ="NonEditContactDetailsTemplate" DataType="{x:Type local:ContactViewModel}">
             <StackPanel>
-                <StackPanel.Resources>
-
-
-
-
-                </StackPanel.Resources>
                 <TextBlock Text="First Name" 
                            Visibility="{Binding FirstName, Converter={StaticResource EmptyStringConverter}}" 
                            Style="{StaticResource TextBlockStyle}" 

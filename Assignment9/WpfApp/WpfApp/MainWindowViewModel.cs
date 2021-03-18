@@ -37,7 +37,7 @@ namespace WpfApp
 
                 if (SetProperty(ref _SelectedContact, value))
                 {
-                    UpdateListBox();
+                    //UpdateListBox();
                     IsEditContact = false;
                 }
 
@@ -53,7 +53,7 @@ namespace WpfApp
                 if (SetProperty(ref _IsEditContact, value))
                 {
                     UpdateEditText();
-                    PropertyChanged?.Invoke(Contacts, new PropertyChangedEventArgs(nameof(Contacts)));
+                    UpdateListBox();
                 }
 
             }
