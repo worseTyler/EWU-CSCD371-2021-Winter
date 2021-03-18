@@ -13,37 +13,53 @@
                         Executed="CommandBinding_Executed" />
     </Window.CommandBindings>
     <Window.Resources>
-
-        <DataTemplate x:Key ="ContactDetailsTemplate" DataType="{x:Type local:ContactViewModel}">
+        <local:EmptyStringConverter x:Key="EmptyStringConverter"/>
+        <DataTemplate x:Key ="NonEditContactDetailsTemplate" DataType="{x:Type local:ContactViewModel}">
             <StackPanel>
                 <StackPanel.Resources>
+
                     
-                    <Style TargetType="TextBox" x:Key="Hide">
+                    <!--<Style TargetType="TextBox" x:Key="HideIfNull">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Binding}" Value="{x:Null}">
-                                <Setter Property="Visibility" Value="Collapsed"/>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Text}" Value="{x:Null}">
+                                <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
                         </Style.Triggers>
-                    </Style>
-                    
+                    </Style>-->
+
                 </StackPanel.Resources>
-                <TextBlock Text="FirstName"/>
-                <TextBox Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Hide}"/>
-                <TextBlock Text="LastName"/>
-                <TextBox Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Hide}"/>
-                <TextBlock Text="PhoneNumber"/>
-                <TextBox Text="{Binding PhoneNumber, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Hide}"/>
-                <TextBlock Text="EmailAddress"/>
-                <TextBox Text="{Binding EmailAddress, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Hide}"/>
-                <TextBlock Text="TwitterName"/>
-                <TextBox Text="{Binding TwitterName, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Hide}"/>
-                <TextBlock Text="LastModified"/>
-                <TextBox Text="{Binding LastModifiedTime, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Hide}">
-                    
-                </TextBox>
-                <Button Content="Edit"/>
+                <TextBlock Text="First Name" Visibility="{Binding FirstName, Converter={StaticResource EmptyStringConverter}}"/>
+                <TextBox Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding FirstName, Converter={StaticResource EmptyStringConverter}}"/>
+                <TextBlock Text="Last Name" Visibility="{Binding LastName, Converter={StaticResource EmptyStringConverter}}"/>
+                <TextBox Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding LastName, Converter={StaticResource EmptyStringConverter}}"/>
+                <TextBlock Text="Phone Number"  Visibility="{Binding PhoneNumber, Converter={StaticResource EmptyStringConverter}}"/>
+                <TextBox Text="{Binding PhoneNumber, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding PhoneNumber, Converter={StaticResource EmptyStringConverter}}"/>
+                <TextBlock Text="Email Address" Visibility="{Binding EmailAddress, Converter={StaticResource EmptyStringConverter}}"/>
+                <TextBox Text="{Binding EmailAddress, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding EmailAddress, Converter={StaticResource EmptyStringConverter}}"/>
+                <TextBlock Text="Twitter Name" Visibility="{Binding TwitterName, Converter={StaticResource EmptyStringConverter}}"/>
+                <TextBox Text="{Binding TwitterName, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding TwitterName, Converter={StaticResource EmptyStringConverter}}"/>
+                <TextBlock Text="{Binding LastModifiedTime, StringFormat='Last Modified @ {0}'}" Visibility="{Binding LastModifiedTime, Converter={StaticResource EmptyStringConverter}}"/>
             </StackPanel>
         </DataTemplate>
+
+        <DataTemplate x:Key ="EditContactDetailsTemplate" DataType="{x:Type local:ContactViewModel}">
+                <StackPanel>
+                    <TextBlock Text="First Name"/>
+                    <TextBox Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBlock Text="Last Name"/>
+                    <TextBox Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBlock Text="Phone Number"/>
+                    <TextBox Text="{Binding PhoneNumber, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBlock Text="Email Address"/>
+                    <TextBox Text="{Binding EmailAddress, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBlock Text="Twitter Name"/>
+                    <TextBox Text="{Binding TwitterName, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBlock Text="{Binding LastModifiedTime, StringFormat='Last Modified @ {0}'}"/>
+                </StackPanel>
+         </DataTemplate>
+
+
+
         <DataTemplate x:Key="ContactListTemplate" DataType="{x:Type local:ContactViewModel}">
             <Grid>
                 <TextBlock>
@@ -56,10 +72,18 @@
                 </TextBlock>
             </Grid>
         </DataTemplate>
+        <Style TargetType="Button" x:Key="ButtonHider">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding SelectedContact}" Value="{x:Null}">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
 
     </Window.Resources>
+    
     <Grid>
-        
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
@@ -92,7 +116,7 @@
 
         <StackPanel Grid.Row="1" Grid.Column="1">
             <ContentControl Content="{Binding SelectedContact}"
-                        ContentTemplate="{StaticResource ContactDetailsTemplate}"
+                        ContentTemplate="{StaticResource NonEditContactDetailsTemplate}"
                         Grid.Column="1"
                         Grid.Row="1">
                 <ContentControl.Style>
@@ -101,20 +125,35 @@
                             <DataTrigger Binding="{Binding SelectedContact}" Value="{x:Null}">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </ContentControl.Style>
-            </ContentControl>
-            <Button Content="Remove" Command="{Binding RemoveContactCommand}">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding SelectedContact}" Value="{x:Null}">
+                            <DataTrigger Binding="{Binding IsEditContact}" Value="True">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
-                </Button.Style>
+                </ContentControl.Style>
+            </ContentControl>
+
+            <ContentControl Content="{Binding SelectedContact}"
+                        ContentTemplate="{StaticResource EditContactDetailsTemplate}"
+                        Grid.Column="1"
+                        Grid.Row="1">
+                <ContentControl.Style>
+                    <Style TargetType="ContentControl">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelectedContact}" Value="{x:Null}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsEditContact}" Value="False">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ContentControl.Style>
+            </ContentControl>
+            
+            
+            <Button Content="{Binding EditSaveText}" Command="{Binding EditContactCommand}" Style="{StaticResource ButtonHider}"/>
+            <Button Content="Remove" Command="{Binding RemoveContactCommand}" Style="{StaticResource ButtonHider}">
             </Button>
         </StackPanel>
     </Grid>

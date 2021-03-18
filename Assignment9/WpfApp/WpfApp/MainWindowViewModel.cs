@@ -18,6 +18,8 @@ namespace WpfApp
 
         public GenericCommand RemoveContactCommand { get; }
 
+        public GenericCommand EditContactCommand { get; }
+
         private ObservableCollection<ContactViewModel> _Contacts = new();
         public ObservableCollection<ContactViewModel> Contacts
         {
@@ -32,11 +34,27 @@ namespace WpfApp
             get => _SelectedContact;
             set
             {
-                if(SetProperty(ref _SelectedContact, value))
-                    UpdateListBox();   
+                if (SetProperty(ref _SelectedContact, value))
+                    UpdateListBox();
             }
+        }
 
+        private bool _IsEditContact;
+        public bool IsEditContact
+        {
+            get => _IsEditContact;
+            set
+            {
+                if (SetProperty(ref _IsEditContact, value))
+                    UpdateEditText();
+            }
+        }
 
+        private string _EditSaveText = "Edit";
+        public string EditSaveText
+        {
+            get => _EditSaveText;
+            set => SetProperty(ref _EditSaveText, value);
         }
 
         private void UpdateListBox()
@@ -57,48 +75,18 @@ namespace WpfApp
 
         public MainWindowViewModel()
         {
-            ContactViewModel contactViewModel = new()
-            {
-                FirstName = "Tyler",
-                LastName = "Jones"
-            };
-
-            ContactViewModel contactViewModel2 = new()
-            {
-                FirstName = "Cccc",
-                LastName = "Jones"
-            };
-            Contacts.Add(contactViewModel);
-            Contacts.Add(contactViewModel2);
-            Contacts = new ObservableCollection<ContactViewModel>(Contacts.OrderBy(item => item.FirstName));
             NewContactCommand = new(NewContact);
             RemoveContactCommand = new(RemoveContact);
+            EditContactCommand = new(EditContact);
         }
 
         private async void NewContact()
         {
-            try
-            {
-                await NewContactAsync();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-        }
-
-        private async Task NewContactAsync()
-        {
-            await Task.Run(() =>
-            {
-                ContactViewModel newContact = new() { FirstName = "New Contact" };
-                App.Current.Dispatcher.Invoke(() =>
-                {
-                    Contacts.Add(newContact);
-                    Contacts = new ObservableCollection<ContactViewModel>(Contacts.OrderBy(item => item.FirstName));
-                });
-                SelectedContact = newContact;
-            });
+            ContactViewModel newContact = new() { FirstName = "New Contact" };
+            Contacts.Add(newContact);
+            Contacts = new ObservableCollection<ContactViewModel>(Contacts.OrderBy(item => item.FirstName));
+            IsEditContact = true;
+            SelectedContact = newContact;
         }
 
         private void RemoveContact()
@@ -106,6 +94,14 @@ namespace WpfApp
             Contacts.Remove(SelectedContact);
             Contacts = new ObservableCollection<ContactViewModel>(Contacts.OrderBy(item => item.FirstName));
         }
+
+        private void EditContact()
+        {
+            IsEditContact = !IsEditContact;
+            SelectedContact.LastModifiedTime = string.Empty;
+        }
+
+        private void UpdateEditText() => EditSaveText = (EditSaveText == "Edit" ? "Save" : "Edit");
     }
 
     public class GenericCommand : ICommand
