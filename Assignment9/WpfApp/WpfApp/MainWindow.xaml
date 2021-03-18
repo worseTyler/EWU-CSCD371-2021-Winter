@@ -13,48 +13,88 @@
                         Executed="CommandBinding_Executed" />
     </Window.CommandBindings>
     <Window.Resources>
+
+        <Style TargetType="TextBox" x:Key="TextBoxHide">
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Text}" Value="">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="TextBlockStyle">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Margin" Value="0,10,0,0"/>
+        </Style>
+        
         <local:EmptyStringConverter x:Key="EmptyStringConverter"/>
         <DataTemplate x:Key ="NonEditContactDetailsTemplate" DataType="{x:Type local:ContactViewModel}">
             <StackPanel>
                 <StackPanel.Resources>
 
-                    
-                    <!--<Style TargetType="TextBox" x:Key="HideIfNull">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Text}" Value="{x:Null}">
-                                <Setter Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>-->
+
+
 
                 </StackPanel.Resources>
-                <TextBlock Text="First Name" Visibility="{Binding FirstName, Converter={StaticResource EmptyStringConverter}}"/>
-                <TextBox Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding FirstName, Converter={StaticResource EmptyStringConverter}}"/>
-                <TextBlock Text="Last Name" Visibility="{Binding LastName, Converter={StaticResource EmptyStringConverter}}"/>
-                <TextBox Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding LastName, Converter={StaticResource EmptyStringConverter}}"/>
-                <TextBlock Text="Phone Number"  Visibility="{Binding PhoneNumber, Converter={StaticResource EmptyStringConverter}}"/>
-                <TextBox Text="{Binding PhoneNumber, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding PhoneNumber, Converter={StaticResource EmptyStringConverter}}"/>
-                <TextBlock Text="Email Address" Visibility="{Binding EmailAddress, Converter={StaticResource EmptyStringConverter}}"/>
-                <TextBox Text="{Binding EmailAddress, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding EmailAddress, Converter={StaticResource EmptyStringConverter}}"/>
-                <TextBlock Text="Twitter Name" Visibility="{Binding TwitterName, Converter={StaticResource EmptyStringConverter}}"/>
-                <TextBox Text="{Binding TwitterName, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding TwitterName, Converter={StaticResource EmptyStringConverter}}"/>
-                <TextBlock Text="{Binding LastModifiedTime, StringFormat='Last Modified @ {0}'}" Visibility="{Binding LastModifiedTime, Converter={StaticResource EmptyStringConverter}}"/>
+                <TextBlock Text="First Name" 
+                           Visibility="{Binding FirstName, Converter={StaticResource EmptyStringConverter}}" 
+                           Style="{StaticResource TextBlockStyle}" 
+                           Margin="0,0,0,0"/>
+                
+                <TextBox Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" 
+                         Style="{StaticResource TextBoxHide}"/>
+                
+                <TextBlock Text="Last Name" 
+                           Visibility="{Binding LastName, Converter={StaticResource EmptyStringConverter}}" 
+                           Style="{StaticResource TextBlockStyle}"/>
+                
+                <TextBox Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" 
+                         Style="{StaticResource TextBoxHide}"/>
+                
+                <TextBlock Text="Phone Number"  
+                           Visibility="{Binding PhoneNumber, Converter={StaticResource EmptyStringConverter}}" 
+                           Style="{StaticResource TextBlockStyle}"/>
+                
+                <TextBox Text="{Binding PhoneNumber, UpdateSourceTrigger=PropertyChanged}" 
+                         Style="{StaticResource TextBoxHide}"/>
+                
+                <TextBlock Text="Email Address" 
+                           Visibility="{Binding EmailAddress, Converter={StaticResource EmptyStringConverter}}" 
+                           Style="{StaticResource TextBlockStyle}"/>
+                
+                <TextBox Text="{Binding EmailAddress, UpdateSourceTrigger=PropertyChanged}" 
+                         Style="{StaticResource TextBoxHide}" />
+                
+                <TextBlock Text="Twitter Name" 
+                           Visibility="{Binding TwitterName, Converter={StaticResource EmptyStringConverter}}" 
+                           Style="{StaticResource TextBlockStyle}"/>
+                
+                <TextBox Text="{Binding TwitterName, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource TextBoxHide}"/>
+                
+                <TextBlock Text="{Binding LastModifiedTime, StringFormat='Last Modified @ {0}'}" 
+                           Visibility="{Binding LastModifiedTime, Converter={StaticResource EmptyStringConverter}}" 
+                           Style="{StaticResource TextBlockStyle}"/>
+                
             </StackPanel>
         </DataTemplate>
 
+
         <DataTemplate x:Key ="EditContactDetailsTemplate" DataType="{x:Type local:ContactViewModel}">
                 <StackPanel>
-                    <TextBlock Text="First Name"/>
-                    <TextBox Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}"/>
-                    <TextBlock Text="Last Name"/>
-                    <TextBox Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}"/>
-                    <TextBlock Text="Phone Number"/>
-                    <TextBox Text="{Binding PhoneNumber, UpdateSourceTrigger=PropertyChanged}"/>
-                    <TextBlock Text="Email Address"/>
-                    <TextBox Text="{Binding EmailAddress, UpdateSourceTrigger=PropertyChanged}"/>
-                    <TextBlock Text="Twitter Name"/>
-                    <TextBox Text="{Binding TwitterName, UpdateSourceTrigger=PropertyChanged}"/>
-                    <TextBlock Text="{Binding LastModifiedTime, StringFormat='Last Modified @ {0}'}"/>
+                    <TextBlock Text="First Name" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBox Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" FontSize="18"/>
+                    <TextBlock Text="Last Name" Style="{StaticResource TextBlockStyle}"/>
+                <TextBox Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" FontSize="18"/>
+                    <TextBlock Text="Phone Number" Style="{StaticResource TextBlockStyle}"/>
+                <TextBox Text="{Binding PhoneNumber, UpdateSourceTrigger=PropertyChanged}" FontSize="18"/>
+                    <TextBlock Text="Email Address" Style="{StaticResource TextBlockStyle}"/>
+                <TextBox Text="{Binding EmailAddress, UpdateSourceTrigger=PropertyChanged}" FontSize="18"/>
+                    <TextBlock Text="Twitter Name" Style="{StaticResource TextBlockStyle}"/>
+                <TextBox Text="{Binding TwitterName, UpdateSourceTrigger=PropertyChanged}" FontSize="18"/>
+                    <TextBlock Text="{Binding LastModifiedTime, StringFormat='Last Modified @ {0}'}" Style="{StaticResource TextBlockStyle}"/>
                 </StackPanel>
          </DataTemplate>
 

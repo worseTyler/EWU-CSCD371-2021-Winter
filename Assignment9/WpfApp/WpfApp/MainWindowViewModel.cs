@@ -34,8 +34,13 @@ namespace WpfApp
             get => _SelectedContact;
             set
             {
+
                 if (SetProperty(ref _SelectedContact, value))
+                {
                     UpdateListBox();
+                    IsEditContact = false;
+                }
+
             }
         }
 
@@ -46,7 +51,11 @@ namespace WpfApp
             set
             {
                 if (SetProperty(ref _IsEditContact, value))
+                {
                     UpdateEditText();
+                    PropertyChanged?.Invoke(Contacts, new PropertyChangedEventArgs(nameof(Contacts)));
+                }
+
             }
         }
 
@@ -75,18 +84,28 @@ namespace WpfApp
 
         public MainWindowViewModel()
         {
+            ContactViewModel contactViewModel = new()
+            {
+                FirstName = "Tyler",
+                LastName = "Jones",
+                EmailAddress = "tylerjones@email.com",
+                PhoneNumber = "509-999-1234"
+            };
+
+            Contacts.Add(contactViewModel);
+
             NewContactCommand = new(NewContact);
             RemoveContactCommand = new(RemoveContact);
             EditContactCommand = new(EditContact);
         }
 
-        private async void NewContact()
+        private void NewContact()
         {
             ContactViewModel newContact = new() { FirstName = "New Contact" };
             Contacts.Add(newContact);
             Contacts = new ObservableCollection<ContactViewModel>(Contacts.OrderBy(item => item.FirstName));
-            IsEditContact = true;
             SelectedContact = newContact;
+            IsEditContact = true;
         }
 
         private void RemoveContact()
