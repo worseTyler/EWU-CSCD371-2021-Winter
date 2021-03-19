@@ -101,7 +101,9 @@ namespace WpfApp.Tests
 
             string intialModifiedTime = mainWindowViewModel.SelectedContact.LastModifiedTime;
             
-            Thread.Sleep(1000);
+            Thread.Sleep(1000); 
+            // While this is kind of gross I only do it once and it makes it so I don't have to put complicated seems in my code
+            // Hopefully ultimately increasing the readability of my code
 
             mainWindowViewModel.EditContactCommand.Action();
             mainWindowViewModel.EditContactCommand.Action();
@@ -109,6 +111,21 @@ namespace WpfApp.Tests
             string finalModifiedTime = mainWindowViewModel.SelectedContact.LastModifiedTime;
 
             Assert.AreNotEqual(intialModifiedTime, finalModifiedTime);
+        }
+
+        [TestMethod]
+        public void EditContactCommand_SelectedContactStillRemainsInContactsAfterEdit()
+        {
+            MainWindowViewModel mainWindowViewModel = new();
+            ContactViewModel expected = mainWindowViewModel.Contacts[0];
+            mainWindowViewModel.SelectedContact = expected;
+
+
+            mainWindowViewModel.EditContactCommand.Action();
+
+            ContactViewModel actual = mainWindowViewModel.SelectedContact;
+
+            Assert.AreEqual<ContactViewModel>(expected, actual);
         }
     }
 }

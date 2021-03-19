@@ -22,7 +22,17 @@ namespace WpfApp
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException($"{nameof(value)} does not have a convert back in EmptyStringConverter");
+            if(EqualityComparer<object>.Default.Equals(Visibility.Visible, value))
+            {
+                return "Visible";
+            } else if(EqualityComparer<object>.Default.Equals(Visibility.Collapsed, value))
+            {
+                return "Collapsed";
+            }
+            else
+            {
+                throw new ArgumentException($"Convert Back in EmptyStringConverter doesn't have a valid conversion for {nameof(value)}");
+            }
         }
     }
 }

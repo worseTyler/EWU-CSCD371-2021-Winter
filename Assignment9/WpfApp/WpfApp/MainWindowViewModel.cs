@@ -113,6 +113,7 @@ namespace WpfApp
             IsEditContact = !IsEditContact;
             if (!IsEditContact)
             {
+                int contactIndex = Contacts.IndexOf(SelectedContact);
                 SelectedContact = new ContactViewModel()
                 {
                     FirstName = SelectedContact.FirstName,
@@ -120,8 +121,9 @@ namespace WpfApp
                     EmailAddress = SelectedContact.EmailAddress,
                     PhoneNumber = SelectedContact.PhoneNumber,
                     TwitterName = SelectedContact.TwitterName,
-                    LastModifiedTime = DateTime.Now.ToString(),
+                    LastModifiedTime = DateTime.Now.ToString(), // Making a new instance of this object was the only way I could get this to work, gross
                 };
+                Contacts[contactIndex] = SelectedContact;
             }
         }
 
